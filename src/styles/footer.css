@@ -1,0 +1,21 @@
+.gradient-container {
+    background: -webkit-linear-gradient(to top right, #c2e8ff, #90c3fc);
+    background: linear-gradient(to top right, #c2e8ff, #90c3fc);
+    
+}
+
+.font-secondary li a {
+    color: #2e266d; 
+    transition: color 0.3s ease; 
+  }
+  
+  .font-secondary li a:hover {
+    color: #87CB28;
+    font-weight: bold;
+  }
+
+  @media (max-width: 768px) {
+    .footer-image-container {
+      display: none;
+    }
+  }
