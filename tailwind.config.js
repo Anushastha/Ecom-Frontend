@@ -5,8 +5,9 @@ module.exports = {
   theme: {
     extend: {
       colors: {
-        "blue": "#2E266D",
-        "green": "#87CB28",
+        "pink": "#E02189",
+        "black": "#242626",
+        "grey": "#9B9A9D"
       },
       fontFamily: {
         "primary": ["Playfair Display", "sans-serif"],

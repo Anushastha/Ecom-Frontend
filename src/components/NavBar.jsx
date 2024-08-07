@@ -196,14 +196,14 @@ const NavBar = () => {
               ) : (
                 <div className="mt-3 mt-lg-0">
                   <Link
-                    className="btn btn-blue me-2 font-primary"
+                    className="btn btn-black me-2 font-primary"
                     to="/auth?mode=login"
                     style={{ width: "80px" }}
                   >
                     Login
                   </Link>
                   <Link
-                    className="btn btn-blue font-primary"
+                    className="btn btn-black font-primary"
                     to="/auth?mode=register"
                   >
                     Register

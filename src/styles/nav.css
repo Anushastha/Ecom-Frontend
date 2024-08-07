@@ -11,24 +11,24 @@
   
   .navbar-brand {
     display: block;
-    width: 150px;
-    height: 50px; 
+    width: 160px;
+    height: 100px; 
     background: url('../../public/assets/images/logo.png') no-repeat center center;
     background-size: contain;
   }
   
   .nav-link {
-    color: #2e266d;
+    color: #242626;
     position: relative;
     font-weight: normal;
   }
   
   .nav-link:hover{
-    color: #87CB28 !important;
+    color: #E02189 !important;
   }
   
   .nav-link.active {
-    color: #87CB28 !important;
+    color: #E02189 !important;
     font-weight: bold;
   }
   
@@ -40,7 +40,7 @@
       left: 0;
       width: 0;
       height: 2px;
-      background-color: #87CB28;
+      background-color: #E02189;
       visibility: visible;
       transition: width 0.3s ease-in-out;
     }

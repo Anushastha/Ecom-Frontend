@@ -15,6 +15,8 @@ import NavBar from './components/NavBar';
 import Footer from './components/Footer';
 import LoginRegister from './pages/LoginRegister'
 import AdminDashboard from './pages/admin/AdminDashboard';
+import UserDashboard from './pages/user/UserDashboard';
+import Landing from './pages/Landing';
 
 const PrivateRoute = ({ children, isAdmin }) => {
     const token = localStorage.getItem('token');
@@ -70,7 +72,7 @@ function App() {
                     <Route index element={<Landing />} />
                     <Route path="auth" element={<LoginRegister />} />
 
-                    <Route path="user/dashboard" element={<Colleges />} />
+                    <Route path="user/dashboard" element={<UserDashboard />} />
 
                     <Route path="admin/dashboard" element={<PrivateRoute isAdmin={true}><AdminDashboard /></PrivateRoute>} />
 
