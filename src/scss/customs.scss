@@ -1,0 +1,47 @@
+@import url('https://fonts.googleapis.com/css2?family=Lato:ital,wght@0,100;0,300;0,400;0,700;0,900;1,100;1,300;1,400;1,700;1,900&family=Playfair+Display:ital,wght@0,400..900;1,400..900&display=swap');
+
+$color: (
+    "blue": rgb(46, 38, 109),
+    "red":  rgb(219, 46, 46),
+    "green":rgb(135, 203, 40),
+    "grey": rgb(168,170,170)
+  );
+
+  .font-primary {
+    font-family: 'Playfair Display', sans-serif;
+  }
+  
+  .font-secondary {
+    font-family: 'Lato', sans-serif;
+  }
+
+  @each $class, $colorValue in $color {
+    .text-#{$class} {
+      color: $colorValue;
+    }
+    .bg-#{$class} {
+      background-color: $colorValue;
+    }
+    .btn-#{$class}{
+      background-color: $colorValue;
+      color: white;
+      border: none;
+
+      &:hover {
+        background-color: lighten($colorValue, 10%);
+        color: white;
+      }
+    }
+
+    .btn-outline-#{$class} {
+      background-color: transparent;
+      border: 1px solid $colorValue;
+      color: $colorValue;
+  
+      &:hover {
+        background-color: lighten($colorValue, 10%);
+        color: white;
+      }
+    }
+    
+  }
