@@ -72,19 +72,20 @@ const Footer = () => {
               }}
             >
               <p
-                className="font-secondary"
+                className="font-secondary tw-text-white"
                 style={{
                   width: "50vw",
                   textAlign: "left", // Center text horizontally
                   fontSize: "0.8rem",
-                  fontWeight: "bold",
                 }}
               >
-                Simplify your college search journey, providing a seamless
-                experience to help you discover the perfect fit for your future
-                aspirations and academic goals.
+                Discover a world of premium beauty and personal care products
+                designed to enhance your natural glow. Explore our exclusive
+                range for personalized, high-quality essentials that bring out
+                the best in you.
                 <br />
-                Access your account or create a new one to unlock more features.
+                <br />
+                Access your account or create a new one to shop for more.
               </p>
             </div>
             <div
@@ -95,17 +96,17 @@ const Footer = () => {
               }}
             >
               <Link
-                className="btn btn-blue font-primary me-1"
-                style={{ width: "100px", height: "30px", fontSize: "0.9rem" }}
+                className="btn btn-outline-light font-primary me-1"
+                style={{ width: "100px", height: "35px", fontSize: "0.9rem" }}
                 to={`/auth?mode=login`}
               >
                 Login
               </Link>
               <Link
-                className="btn btn-blue font-primary"
+                className="btn btn-outline-light font-primary"
                 style={{
                   width: "100px",
-                  height: "30px",
+                  height: "35px",
                   fontSize: "0.9rem",
                 }}
                 to={`/auth?mode=register`}
@@ -172,11 +173,10 @@ const Footer = () => {
                 className="font-secondary"
                 style={{
                   lineHeight: "40px",
-                  fontWeight: "bold",
                   fontSize: "15px",
                 }}
               >
-                <li>collegeseek@gmail.com</li>
+                <li>lushbeauty@gmail.com</li>
                 <li>9841000000</li>
               </ul>
             </div>

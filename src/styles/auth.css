@@ -3,15 +3,14 @@
   }
   
   body.login-register-body {
-    background: #90c3fc;
-    background: -webkit-linear-gradient(to top right, #c2e8ff, #90c3fc);
-    background: linear-gradient(to top right, #c2e8ff, #90c3fc);
+    background: -webkit-linear-gradient(to top left, #fca3b7, #fcbfcb, #fcdde3);
+    background: linear-gradient(to top left, #fca3b7, #fcbfcb, #fcdde3);
     display: flex;
     justify-content: center;
     align-items: center;
     flex-direction: column;
-    font-family: "Amaranth", "Lato", sans-serif;
+    font-family: "Playfair Display", "Lato", sans-serif;
     height: 100vh;
-    color: #2e266d;
+    color: #242626;
   }
   

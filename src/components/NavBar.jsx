@@ -16,7 +16,7 @@ const NavBar = () => {
     <div style={{ marginBottom: "100px" }}>
       <nav
         className="navbar bg-light navbar-expand-lg fixed-top"
-        style={{ boxShadow: "0px 2px 10px 0px rgba(99, 99, 99, 0.1)" }}
+        style={{ boxShadow: "0px 2px 10px 0px rgba(99, 99, 99, 0.2)" }}
       >
         <div className="container-fluid">
           <Link className="navbar-brand" to="/"></Link>
@@ -40,7 +40,7 @@ const NavBar = () => {
                 <li className="nav-item">
                   <NavLink
                     className="nav-link mx-lg-2 font-primary"
-                    to="/"
+                    to="/admin/dashboard"
                     exact
                   >
                     Home
@@ -49,25 +49,17 @@ const NavBar = () => {
                 <li className="nav-item">
                   <NavLink
                     className="nav-link mx-lg-2 font-primary"
-                    to="/admin/colleges"
+                    to="/admin/products"
                   >
-                    Colleges
+                    Products
                   </NavLink>
                 </li>
                 <li className="nav-item">
                   <NavLink
                     className="nav-link mx-lg-2 font-primary"
-                    to="/admin/courses"
+                    to="/admin/category"
                   >
-                    Courses
-                  </NavLink>
-                </li>
-                <li className="nav-item">
-                  <NavLink
-                    className="nav-link mx-lg-2 font-primary"
-                    to="/admin/blogs"
-                  >
-                    Blogs
+                    Category
                   </NavLink>
                 </li>
               </ul>
@@ -85,25 +77,17 @@ const NavBar = () => {
                 <li className="nav-item">
                   <NavLink
                     className="nav-link mx-lg-2 font-primary"
-                    to="/user/colleges"
+                    to="/user/products"
                   >
-                    Colleges
+                    Products
                   </NavLink>
                 </li>
                 <li className="nav-item">
                   <NavLink
                     className="nav-link mx-lg-2 font-primary"
-                    to="/user/courses"
+                    to="/user/orders"
                   >
-                    Courses
-                  </NavLink>
-                </li>
-                <li className="nav-item">
-                  <NavLink
-                    className="nav-link mx-lg-2 font-primary"
-                    to="/user/blogs"
-                  >
-                    Blogs
+                    Orders
                   </NavLink>
                 </li>
               </ul>
@@ -122,7 +106,7 @@ const NavBar = () => {
                     ></img>
                   ) : (
                     <div
-                      className="tw-rounded-full tw-flex tw-items-center tw-bg-pink-700 tw-justify-center font-secondary font-bold"
+                      className="tw-rounded-full tw-flex tw-items-center tw-bg-black tw-justify-center font-secondary font-bold"
                       style={{
                         width: "35px",
                         height: "35px",

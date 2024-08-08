@@ -4,6 +4,15 @@ import * as Components from "../Components";
 import "../styles/auth.css";
 import { loginApi, registerApi } from "../apis/Apis";
 import { toast } from "react-toastify";
+import {
+  FaUser,
+  FaEnvelope,
+  FaPhone,
+  FaEye,
+  FaEyeSlash,
+  FaArrowLeft,
+  FaArrowRight,
+} from "react-icons/fa";
 
 function LoginRegister() {
   const location = useLocation();
@@ -72,7 +81,8 @@ function LoginRegister() {
       .then((res) => {
         if (res.data.success) {
           toast.success(res.data.message);
-          navigate("/auth");
+          window.location.reload();
+          navigate("/auth?mode=login");
         } else {
           toast.error(res.data.message);
         }
@@ -133,13 +143,7 @@ function LoginRegister() {
             <Components.InputContainer>
               <Components.Input type="text" onChange={changeFullName} />
               <Components.IconWrapper>
-                <img
-                  src="/assets/svg/user.svg"
-                  alt="user"
-                  style={{
-                    height: "25px",
-                  }}
-                />
+                <FaUser size={20} />
               </Components.IconWrapper>
             </Components.InputContainer>
 
@@ -147,13 +151,7 @@ function LoginRegister() {
             <Components.InputContainer>
               <Components.Input type="text" onChange={changeEmail} />
               <Components.IconWrapper>
-                <img
-                  src="/assets/svg/mail.svg"
-                  alt="mail"
-                  style={{
-                    height: "25px",
-                  }}
-                />{" "}
+                <FaEnvelope size={20} />
               </Components.IconWrapper>
             </Components.InputContainer>
 
@@ -164,17 +162,17 @@ function LoginRegister() {
                 placeholder="Password"
                 onChange={changePassword}
               />
-              <Components.IconWrapper onClick={togglePasswordVisibility}>
-                <img
-                  src={`/assets/svg/${
-                    passwordVisible ? "eye" : "eye-crossed"
-                  }.svg`}
-                  alt="eye"
-                  style={{
-                    height: "25px",
-                    cursor: "pointer",
-                  }}
-                />{" "}
+              <Components.IconWrapper
+                onClick={togglePasswordVisibility}
+                style={{
+                  cursor: "pointer",
+                }}
+              >
+                {passwordVisible ? (
+                  <FaEye size={23} />
+                ) : (
+                  <FaEyeSlash size={23} />
+                )}
               </Components.IconWrapper>
             </Components.InputContainer>
 
@@ -184,17 +182,17 @@ function LoginRegister() {
                 placeholder="Confirm password"
                 onChange={changeConfirmPassword}
               />
-              <Components.IconWrapper onClick={toggleConfirmPasswordVisibility}>
-                <img
-                  src={`/assets/svg/${
-                    confirmPasswordVisible ? "eye" : "eye-crossed"
-                  }.svg`}
-                  alt="eye"
-                  style={{
-                    height: "25px",
-                    cursor: "pointer",
-                  }}
-                />{" "}
+              <Components.IconWrapper
+                onClick={toggleConfirmPasswordVisibility}
+                style={{
+                  cursor: "pointer",
+                }}
+              >
+                {confirmPasswordVisible ? (
+                  <FaEye size={23} />
+                ) : (
+                  <FaEyeSlash size={23} />
+                )}
               </Components.IconWrapper>
             </Components.InputContainer>
 
@@ -202,13 +200,7 @@ function LoginRegister() {
             <Components.InputContainer>
               <Components.Input type="number" onChange={changePhoneNumber} />
               <Components.IconWrapper>
-                <img
-                  src="/assets/svg/phone-blue.svg"
-                  alt="phone"
-                  style={{
-                    height: "25px",
-                  }}
-                />{" "}
+                <FaPhone size={20} />
               </Components.IconWrapper>
             </Components.InputContainer>
 
@@ -231,13 +223,7 @@ function LoginRegister() {
             <Components.InputContainer>
               <Components.Input type="text" onChange={changeEmail} />
               <Components.IconWrapper>
-                <img
-                  src="/assets/svg/mail.svg"
-                  alt="mail"
-                  style={{
-                    height: "25px",
-                  }}
-                />{" "}
+                <FaEnvelope size={20} />
               </Components.IconWrapper>
             </Components.InputContainer>
 
@@ -251,17 +237,17 @@ function LoginRegister() {
                 type={passwordVisible ? "text" : "password"}
                 onChange={changePassword}
               />
-              <Components.IconWrapper onClick={togglePasswordVisibility}>
-                <img
-                  src={`/assets/svg/${
-                    passwordVisible ? "eye" : "eye-crossed"
-                  }.svg`}
-                  alt="eye"
-                  style={{
-                    height: "25px",
-                    cursor: "pointer",
-                  }}
-                />{" "}
+              <Components.IconWrapper
+                onClick={togglePasswordVisibility}
+                style={{
+                  cursor: "pointer",
+                }}
+              >
+                {passwordVisible ? (
+                  <FaEye size={23} />
+                ) : (
+                  <FaEyeSlash size={23} />
+                )}
               </Components.IconWrapper>
             </Components.InputContainer>
 
@@ -269,17 +255,6 @@ function LoginRegister() {
               <Components.Anchor href="/sendEmail">
                 Forgot your password?
               </Components.Anchor>
-              <Components.RememberMe>
-                <label>
-                  Remember me
-                  <input
-                    type="checkbox"
-                    style={{
-                      marginLeft: "10px",
-                    }}
-                  />
-                </label>
-              </Components.RememberMe>
             </Components.LoginBottomContainer>
 
             <Components.Button type="submit">Login</Components.Button>
@@ -300,10 +275,15 @@ function LoginRegister() {
               >
                 To keep connected with us please login with your personal info
               </Components.Paragraph>
-              <Components.GhostButton onClick={() => toggleSignIn(true)}>
+              <Components.GhostButton
+                onClick={() => toggleSignIn(true)}
+                style={{
+                  marginBottom: "20px",
+                }}
+              >
                 Login
               </Components.GhostButton>
-              <img src="/assets/svg/left-arrow.svg" alt="arrow-left" />
+              <FaArrowLeft size={20} />
             </Components.LeftOverlayPanel>
 
             <Components.RightOverlayPanel signinIn={signIn}>
@@ -318,10 +298,15 @@ function LoginRegister() {
               >
                 Enter your personal details and start your journey with us
               </Components.Paragraph>
-              <Components.GhostButton onClick={() => toggleSignIn(false)}>
+              <Components.GhostButton
+                onClick={() => toggleSignIn(false)}
+                style={{
+                  marginBottom: "20px",
+                }}
+              >
                 Register
               </Components.GhostButton>
-              <img src="/assets/svg/right-arrow.svg" alt="arrow-right" />
+              <FaArrowRight size={25} />
             </Components.RightOverlayPanel>
           </Components.Overlay>
         </Components.OverlayContainer>

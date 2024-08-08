@@ -1,16 +1,15 @@
 .gradient-container {
-    background: -webkit-linear-gradient(to top right, #c2e8ff, #90c3fc);
-    background: linear-gradient(to top right, #c2e8ff, #90c3fc);
-    
+  background: #242626
+
 }
 
 .font-secondary li a {
-    color: #2e266d; 
+    color: #242626; 
     transition: color 0.3s ease; 
   }
   
   .font-secondary li a:hover {
-    color: #87CB28;
+    color: #E02189;
     font-weight: bold;
   }
 

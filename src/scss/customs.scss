@@ -28,7 +28,7 @@ $color: (
       height: 38px;
 
       &:hover {
-        background-color: lighten($colorValue, 10%);
+        background-color: lighten($colorValue, 20%);
         color: white;
       }
     }
@@ -39,7 +39,7 @@ $color: (
       color: $colorValue;
   
       &:hover {
-        background-color: lighten($colorValue, 10%);
+        background-color: lighten($colorValue, 20%);
         color: white;
       }
     }

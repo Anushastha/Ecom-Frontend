@@ -74,14 +74,14 @@ export const Title = styled.p`
     content: '';
     display: block;
     width: 100%;
-    border-bottom: 3px solid #2E266D;
+    border-bottom: 3px solid #242626;
     border-radius: 10px;
   }
 `;
 
 export const Line = styled.p`
   font-size: 16px;
-  color: #2E266D;
+  color: #242626;
   margin-bottom: 2px;
   font-family: "Lato", sans-serif; 
   text-align: left;
@@ -91,7 +91,7 @@ export const Line = styled.p`
 
 export const Subtitle = styled.p`
   font-size: 16px;
-  color: #2E266D;
+  color: #242626;
   margin: 10px;
   font-family: "Lato", sans-serif; 
   font-weight: 600;
@@ -107,7 +107,7 @@ export const InputContainer = styled.div`
 export const Input = styled.input`
   font-family: "Lato", sans-serif;
   background-color: #F3F4F4;
-  color: #2E266D;
+  color: #242626;
   border: none;
   padding: 5px 15px;
   width: 90%;
@@ -132,8 +132,8 @@ export const IconWrapper = styled.div`
 
 export const Button = styled.button`
   border-radius: 10px;
-  border: 1px solid #2E266D;
-  background-color: #2E266D;
+  border: 1px solid #242626;
+  background-color: #242626;
   color: #ffffff;
   font-size: 16px;
   padding: 8px 35px;
@@ -150,11 +150,11 @@ export const Button = styled.button`
 export const GhostButton = styled(Button)`
   background-color: #ffffff;
   border-color: #ffffff;
-  color: #2E266D;
+  color: #242626;
 `;
 
 export const Anchor = styled.a`
-  color: #2E266D;
+  color: #242626;
   text-decoration: none;
   font-size: 14px;
   font-family: "Lato", sans-serif;
@@ -195,7 +195,7 @@ export const OverlayContainer = styled.div`
 `;
 
 export const Overlay = styled.div`
-  background: #2E266D;
+  background: #242626;
   background-repeat: no-repeat;
   background-size: cover;
   background-position: 0 0;
