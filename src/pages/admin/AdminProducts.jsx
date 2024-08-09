@@ -262,14 +262,14 @@ const AdminProducts = () => {
                         <Link
                           to={`/admin/products/editProduct/${product.id}`}
                           type="button"
-                          className="btn btn-pink tw-mr-1"
+                          className="btn btn-black tw-mr-1 font-primary"
                         >
                           Edit
                         </Link>
                         <button
                           onClick={() => handleDelete(product.id)}
                           type="button"
-                          className="btn btn-danger"
+                          className="btn btn-danger font-primary"
                         >
                           Delete
                         </button>
