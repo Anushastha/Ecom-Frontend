@@ -1,11 +1,8 @@
-import React from 'react'
+import React from "react";
+import "../../styles/tailwind.css";
 
 const AdminDashboard = () => {
-  return (
-    <div>
-      Welcome to admin dashboard
-    </div>
-  )
-}
+  return <div className="tw-container tw-p-10">Welcome to admin dashboard</div>;
+};
 
-export default AdminDashboard
+export default AdminDashboard;

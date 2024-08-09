@@ -109,13 +109,7 @@ function LoginRegister() {
           const convertedJson = JSON.stringify(res.data.userData);
           localStorage.setItem("user", convertedJson);
 
-          navigate(res.data.isAdmin ? "/admin/colleges" : "/user/colleges");
-
-          // if (isAdmin) {
-          //   navigate("/admin/colleges");
-          // } else {
-          //   navigate("/user/colleges");
-          // }
+          navigate(res.data.isAdmin ? "/admin/dashboard" : "/user/dashboard");
         }
       })
       .catch((err) => {
@@ -129,8 +123,23 @@ function LoginRegister() {
   const toggleConfirmPasswordVisibility = () =>
     setConfirmPasswordVisible(!confirmPasswordVisible);
 
+  const handleBackButtonClick = () => {
+    navigate("/");
+  };
+
   return (
     <Components.Wrapper>
+      <div
+        onClick={handleBackButtonClick}
+        style={{
+          position: "absolute",
+          top: "10px",
+          left: "10px",
+          cursor: "pointer",
+        }}
+      >
+        <FaArrowLeft size={25} />
+      </div>
       <Components.Container>
         <Components.SignUpContainer signinIn={signIn}>
           <Components.Form onSubmit={handleRegisterSubmit}>

@@ -1,6 +1,7 @@
 import React from "react";
 import { Link, NavLink, useNavigate } from "react-router-dom";
 import "../styles/nav.css";
+import "../scss/customs.scss";
 
 const NavBar = () => {
   const user = JSON.parse(localStorage.getItem("user"));
@@ -77,7 +78,7 @@ const NavBar = () => {
                 <li className="nav-item">
                   <NavLink
                     className="nav-link mx-lg-2 font-primary"
-                    to="/user/products"
+                    to="/user/dashboard"
                   >
                     Products
                   </NavLink>
@@ -88,6 +89,14 @@ const NavBar = () => {
                     to="/user/orders"
                   >
                     Orders
+                  </NavLink>
+                </li>
+                <li className="nav-item">
+                  <NavLink
+                    className="nav-link mx-lg-2 font-primary"
+                    to="/user/wishlist"
+                  >
+                    My Wishlist
                   </NavLink>
                 </li>
               </ul>

@@ -1,157 +1,113 @@
 import React from "react";
+import "../styles/landing.css";
 import "../scss/customs.scss";
 import { Link } from "react-router-dom";
-import "../styles/tailwind.css";
 
-const Landing = () => {
+const LandingPage = () => {
   return (
-    <>
-      <div className="col">
-        <div
-          className="container"
-          style={{
-            marginTop: "30vh",
-            marginBottom: "80px",
-          }}
-        >
-          <div className="row align-items-center background-light">
-            <div className="col-md-6 mb-4">
-              <h1
-                className="font-primary font-bold mb-4 w-full text-center md:mb-16"
-                style={{
-                  fontSize: "55px",
-                }}
-              >
-                CollegeSeek
-              </h1>
-              <div className="flex items-center mb-4">
-                <p
-                  className="font-secondary"
-                  style={{ textAlign: "justify", fontSize: "20px" }}
-                >
-                  <b>CollegeSeek</b> simplifies your college search journey,
-                  providing a seamless experience to help you discover the
-                  perfect fit for your future aspirations and academic goals.
-                </p>
-              </div>
-              <div className="row items-center">
-                <Link
-                  to="/"
-                  className="tw-text-black flex items-center font-secondary"
-                  style={{ textDecoration: "none", fontSize: "20px" }}
-                >
-                  <u style={{ display: "flex" }}>
-                    <b>Learn More</b>
-                    <img
-                      src="/assets/svg/info-circle.svg"
-                      alt="Information"
-                      style={{ marginLeft: "10px" }}
-                    />
-                  </u>
-                </Link>
-              </div>
-            </div>
-            <div className="col-md-6 text-center">
-              <img
-                src="/assets/images/landing.png"
-                alt="CollegeSeek"
-                className="img-fluid"
-              />
-            </div>
-          </div>
+    <div className="landing-page">
+      <section className="hero">
+        <div className="hero-content">
+          <h1 className="hero-title">Elevate Your Beauty Routine</h1>
+          <p className="hero-subtitle">
+            Discover luxurious skincare and beauty essentials designed just for
+            you.
+          </p>
+          <Link to="/shop" className="btn btn-pink font-primary">
+            Shop Now
+          </Link>
         </div>
+        <img
+          src="/assets/images/hero-bg.jpg"
+          alt="Hero Background"
+          className="hero-bg"
+        />
+      </section>
 
-        <div className="my-5">
-          <div>
-            <h1
-              className="font-primary font-bold w-full text-center md:mb-16"
-              style={{
-                fontSize: "45px",
-                marginBottom: "50px",
-              }}
-            >
-              Explore Colleges
-            </h1>
-          </div>
-          <div
-            style={{
-              margin: "3vh",
-            }}
-          >
-            <div
-              id="carouselExample"
-              className="carousel slide mb-5"
-              data-bs-ride="carousel"
-              data-bs-interval="1500"
-            >
-              <div className="carousel-inner">
-                <div className="carousel-item active">
-                  <img
-                    src="/assets/images/college1.png"
-                    alt="Slide 1"
-                    className="d-block w-100"
-                  />
-                </div>
-                <div className="carousel-item">
-                  <img
-                    src="/assets/images/college2.png"
-                    alt="Slide 2"
-                    className="d-block w-100"
-                  />
-                </div>
-                <div className="carousel-item">
-                  <img
-                    src="/assets/images/college3.png"
-                    alt="Slide 3"
-                    className="d-block w-100"
-                  />
-                </div>
-              </div>
-              <button
-                className="carousel-control-prev"
-                type="button"
-                data-bs-target="#carouselExample"
-                data-bs-slide="prev"
-              >
-                <span
-                  className="carousel-control-prev-icon"
-                  aria-hidden="true"
-                ></span>
-                <span>Previous</span>
-              </button>
-              <button
-                className="carousel-control-next"
-                type="button"
-                data-bs-target="#carouselExample"
-                data-bs-slide="next"
-              >
-                <span>Next</span>
-                <span
-                  className="carousel-control-next-icon"
-                  aria-hidden="true"
-                ></span>
-              </button>
+      {/* Featured Products Section */}
+      <section className="featured-products">
+        <div className="container">
+          <h2 className="section-title">Featured Products</h2>
+          <div className="product-grid">
+            <div className="product-card">
+              <img
+                src="/assets/images/productimage.jpg"
+                alt="Product 1"
+                className="product-image"
+              />
+              <h3 className="product-title">Hydrating Serum</h3>
+              <p className="product-price">$29.99</p>
+              <Link to="/product/1" className="btn-outline font-primary">
+                View Details
+              </Link>
             </div>
+            <div className="product-card">
+              <img
+                src="/assets/images/productimage.jpg"
+                alt="Product 2"
+                className="product-image"
+              />
+              <h3 className="product-title font-secondary">Brightening Mask</h3>
+              <p className="product-price font-secondary">$19.99</p>
+              <Link to="/product/2" className="btn-outline font-primary">
+                View Details
+              </Link>
+            </div>
+            {/* Add more product cards as needed */}
           </div>
         </div>
-        <div className="popular-courses">
-          <div>
-            <h1
-              className="font-primary font-bold w-full text-center md:mb-16"
-              style={{
-                fontSize: "45px",
-                marginTop: "150px",
-                marginBottom: "50px",
-              }}
-            >
-              Popular Courses
-            </h1>
-          </div>
-          
+      </section>
+
+      {/* Promotional Section */}
+      <section className="promo">
+        <div className="container">
+          <h2 className="section-title tw-text-white">Exclusive Offer!</h2>
+          <p className="promo-description tw-text-white">
+            Enjoy 20% off your first purchase with code <b>FIRST20</b> at
+            checkout.
+          </p>
         </div>
-      </div>
-    </>
+        <img
+          src="/assets/images/productimage.jpg"
+          alt="Promotion"
+          className="promo-bg"
+        />
+      </section>
+
+      {/* Testimonials Section */}
+      <section className="testimonials py-16">
+        <div className="container mx-auto text-center">
+          <h2 className="section-title">What Our Customers Say</h2>
+          <div className="testimonial-carousel flex overflow-x-auto space-x-6 pb-10">
+            <div className="testimonial-card bg-white p-8 rounded-lg flex-shrink-0 w-80">
+              <p className="testimonial-text mb-4 font-secondary text-gray-700">
+                "Fantastic products! My skin feels rejuvenated and radiant."
+              </p>
+              <h4 className="testimonial-name text-xl font-primary mb-1">
+                Anna Smith
+              </h4>
+              <span className="testimonial-role text-gray-500">
+                Verified Customer
+              </span>
+            </div>
+            <div className="testimonial-card bg-white p-8 rounded-lg flex-shrink-0 w-80">
+              <p className="testimonial-text mb-4 font-secondary text-gray-700">
+                "Great variety and top-notch quality. Will definitely be coming
+                back."
+              </p>
+              <h4 className="testimonial-name text-xl font-primary mb-1">
+                Mark Johnson
+              </h4>
+              <span className="testimonial-role text-gray-500">
+                Regular Shopper
+              </span>
+            </div>
+            {/* Add more testimonial cards as needed */}
+          </div>
+        </div>
+      </section>
+    </div>
   );
 };
 
-export default Landing;
+export default LandingPage;

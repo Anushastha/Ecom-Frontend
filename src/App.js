@@ -9,14 +9,19 @@ import {
 } from 'react-router-dom';
 import { ToastContainer } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
-import "./styles/index.css";
-
+import Landing from './pages/Landing';
 import NavBar from './components/NavBar';
+import LoginRegister from './pages/LoginRegister';
+
+import "./styles/index.css";
 import Footer from './components/Footer';
-import LoginRegister from './pages/LoginRegister'
 import AdminDashboard from './pages/admin/AdminDashboard';
 import UserDashboard from './pages/user/UserDashboard';
-import Landing from './pages/Landing';
+import SendEmail from './pages/SendEmail';
+import ForgotPasswordCode from './pages/ForgotPassword';
+import ResetPassword from './pages/ResetPassword';
+import AdminProducts from './pages/admin/AdminProducts';
+import AdminCategory from './pages/admin/AdminCategory';
 
 const PrivateRoute = ({ children, isAdmin }) => {
     const token = localStorage.getItem('token');
@@ -62,7 +67,6 @@ function Layout() {
     );
 }
 
-
 function App() {
     return (
         <Router>
@@ -71,11 +75,24 @@ function App() {
                 <Route path="/" element={<Layout />}>
                     <Route index element={<Landing />} />
                     <Route path="auth" element={<LoginRegister />} />
+                    <Route path='/sendEmail' element={<SendEmail />} />
+                    <Route path='/resetCode' element={<ForgotPasswordCode />} />
+                    <Route path='/resetPassword' element={<ResetPassword />} />
 
+                    {/* User public routes */}
                     <Route path="user/dashboard" element={<UserDashboard />} />
 
-                    <Route path="admin/dashboard" element={<PrivateRoute isAdmin={true}><AdminDashboard /></PrivateRoute>} />
+                    
+                    {/* User private routes */}
 
+                    
+                    {/* Admin routes */}
+                    <Route path="admin/dashboard" element={<PrivateRoute isAdmin={true}><AdminDashboard /></PrivateRoute>} />
+                    <Route path="admin/products" element={<PrivateRoute isAdmin={true}><AdminProducts /></PrivateRoute>} />
+                    
+                    <Route path="admin/category" element={<PrivateRoute isAdmin={true}><AdminCategory /></PrivateRoute>} />
+                    
+        
                 </Route>
             </Routes>
         </Router>
