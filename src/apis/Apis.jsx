@@ -44,3 +44,30 @@ export const sendEmailApi = (data) =>
   export const updateUserProfileApi = (userId, formData) =>
     Api.put(`/api/user/update_profile/${userId}`, formData, config);
   
+
+  // Product APIs
+export const createProductApi = (formData) =>
+  Api.post("/api/products/create_product", formData);
+export const getAllProductsApi = () => Api.get("/api/products/get_products");
+export const getSingleProductApi = (id) =>
+  Api.get(`/api/products/get_product/${id}`);
+export const deleteProductApi = (id) =>
+  Api.delete(`/api/products/delete_product/${id}`);
+export const updateProductApi = (id, formData) =>
+  Api.put(`/api/products/update_product/${id}`, formData, config);
+export const searchProductsApi = (query) =>
+  Api.get(`/api/products/search?query=${query}`);
+
+
+//Category APIs
+export const createCategoryApi = (formData) =>
+  Api.post("/api/category/create_category", formData);
+export const getAllCategoriesApi = () => Api.get("/api/category/get_categories");
+export const getSingleCategoryApi = (id) =>
+  Api.get(`/api/category/get_category/${id}`);
+export const updateCategoryApi = (id, formData) =>
+  Api.put(`/api/category/update_category/${id}`, formData, config);
+export const deleteCategoryApi = (id) =>
+  Api.delete(`/api/category/delete_category/${id}`, config);
+export const searchCategorysApi = (query) =>
+  Api.get(`/api/category/search?query=${query}`);
