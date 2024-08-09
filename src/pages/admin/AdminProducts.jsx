@@ -53,7 +53,7 @@ const AdminProducts = () => {
     formData.append("productPrice", productPrice);
     formData.append("productDescription", productDescription);
     productCategory.forEach((category) => {
-      formData.append("productCategory[]", category);
+      formData.append("productCategory", category);
     });
     formData.append("productImage", productImage);
 
@@ -61,6 +61,7 @@ const AdminProducts = () => {
       .then((res) => {
         if (!res.data.success) {
           toast.error(res.data.message);
+          window.location.reload();
         } else {
           toast.success(res.data.message);
           setProducts([...products, res.data.product]);
@@ -79,7 +80,7 @@ const AdminProducts = () => {
   };
 
   const handleDelete = (id) => {
-    console.log("Product ID to delete:", id); // Verify the ID being passed
+    console.log("Product ID to delete:", id);
     if (window.confirm("Are you sure you want to delete this product?")) {
       deleteProductApi(id)
         .then((res) => {
@@ -88,6 +89,7 @@ const AdminProducts = () => {
           } else {
             toast.success(res.data.message);
             setProducts(products.filter((product) => product._id !== id));
+            window.location.reload();
           }
         })
         .catch((error) => {
@@ -133,38 +135,50 @@ const AdminProducts = () => {
                 <label className="mb-2 font-primary">Product Name</label>
                 <input
                   onChange={(e) => setProductName(e.target.value)}
-                  className="form-control mb-2"
+                  className="form-control mb-2 font-secondary"
                   type="text"
                   placeholder="Enter product name"
+                />
+                <label className="mb-2 font-primary">
+                  Product Price (in Rs.)
+                </label>
+                <input
+                  onChange={(e) => setProductPrice(e.target.value)}
+                  className="form-control mb-2 font-secondary"
+                  type="number"
+                  placeholder="Enter product price"
                 />
                 <label className="mb-2 font-primary">Product Description</label>
                 <textarea
                   onChange={(e) => setProductDescription(e.target.value)}
-                  className="form-control mb-2"
+                  className="form-control mb-2 font-secondary"
                   placeholder="Enter product description"
                   cols="4"
                   rows="4"
                 ></textarea>
 
-                <label className="mb-2 font-primary">
-                  Add or select categories
-                </label>
+                <label className="mb-2 font-primary">Select a category</label>
                 <div className="mb-2">
                   {categories.map((category) => (
                     <div key={category._id}>
                       <input
-                        type="checkbox"
+                        type="radio"
                         id={category._id}
                         value={category._id}
-                        onChange={handleCategoryChange}
+                        onChange={(e) => setProductCategory([e.target.value])}
                         checked={productCategory.includes(category._id)}
+                        name="productCategory"
                       />
-                      <label htmlFor={category._id} className="ms-2">
+                      <label
+                        htmlFor={category._id}
+                        className="ms-2 font-secondary"
+                      >
                         {category.categoryName}
                       </label>
                     </div>
                   ))}
                 </div>
+
                 <label className="mb-2 font-primary">
                   Upload Product Image
                 </label>
@@ -184,10 +198,10 @@ const AdminProducts = () => {
                   </div>
                 )}
               </div>
-              <div className="modal-footer">
+              <div className="modal-footer btn-group" role="group">
                 <button
                   type="button"
-                  className="btn btn-secondary"
+                  className="btn btn-secondary tw-mr-1"
                   data-bs-dismiss="modal"
                 >
                   Close
@@ -217,14 +231,28 @@ const AdminProducts = () => {
                 <th scope="col">Actions</th>
               </tr>
             </thead>
-            <tbody>
+            <tbody className="text-center font-secondary">
               {products.map((product) => {
                 return (
                   <tr key={product.id}>
-                    <td>{product.productImage}</td>
+                    <td className="d-flex justify-content-center">
+                      <div
+                        alt={`Product: ${product.productImage}`}
+                        className="img-fluid rounded object-cover mt-2"
+                        style={{
+                          backgroundImage: `url(${product.productImageUrl})`,
+                          backgroundSize: "cover",
+                          backgroundPosition: "center",
+                          height: "50px",
+                          width: "70px",
+                          borderRadius: "8px",
+                          marginTop: "8px",
+                        }}
+                      />
+                    </td>
                     <td>{product.productName}</td>
-                    <td>{product.productPrice}</td>
-                    <td>{product.productCategory}</td>
+                    <td>Rs. {product.productPrice}</td>
+                    <td>{product.productCategory.categoryName}</td>
                     <td>
                       <div
                         className="btn-group"
@@ -234,7 +262,7 @@ const AdminProducts = () => {
                         <Link
                           to={`/admin/products/editProduct/${product.id}`}
                           type="button"
-                          className="btn btn-pink"
+                          className="btn btn-pink tw-mr-1"
                         >
                           Edit
                         </Link>

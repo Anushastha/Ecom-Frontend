@@ -58,6 +58,9 @@ export const updateProductApi = (id, formData) =>
 export const searchProductsApi = (query) =>
   Api.get(`/api/products/search?query=${query}`);
 
+export const getProductsWithCategoryIdApi = (categoryId) =>
+  Api.get(`/api/products/getProductsWithCategoryId/${categoryId}`);
+
 
 //Category APIs
 export const createCategoryApi = (formData) =>

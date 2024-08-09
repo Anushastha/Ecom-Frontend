@@ -6,6 +6,7 @@ import {
   getAllCategoriesApi,
   updateCategoryApi,
 } from "../../apis/Apis";
+import { Link } from "react-router-dom";
 
 const AdminCategory = () => {
   const [newCategoryName, setNewCategoryName] = useState("");
@@ -99,10 +100,7 @@ const AdminCategory = () => {
       <div className="bg-white p-4 shadow">
         <form onSubmit={handleSubmit} className="tw-mb-8">
           <div className="tw-mb-4">
-            <label
-              htmlFor="newCategoryName"
-              className="font-secondary tw-font-bold mb-3"
-            >
+            <label htmlFor="newCategoryName" className="font-primary mb-3">
               New Category Name
             </label>
             <input
@@ -110,7 +108,7 @@ const AdminCategory = () => {
               id="newCategoryName"
               value={newCategoryName}
               onChange={(e) => setNewCategoryName(e.target.value)}
-              className="tw-input tw-w-full tw-px-4 tw-py-2 tw-border tw-border-gray-300 tw-rounded-md tw-shadow-sm focus:tw-outline-none focus:tw-ring-2 focus:tw-ring-black focus:tw-border-transparent"
+              className="font-secondary tw-input tw-w-full tw-px-4 tw-py-2 tw-border tw-border-gray-300 tw-rounded-md tw-shadow-sm focus:tw-outline-none focus:tw-ring-2 focus:tw-ring-black focus:tw-border-transparent"
               required
             />
           </div>
@@ -136,19 +134,19 @@ const AdminCategory = () => {
                         type="text"
                         value={editCategoryName}
                         onChange={(e) => setEditCategoryName(e.target.value)}
-                        className="tw-input tw-w-full tw-px-4 tw-py-2 tw-border tw-border-gray-300 tw-rounded-md tw-shadow-sm focus:tw-outline-none focus:tw-ring-2 focus:tw-ring-black focus:tw-border-transparent"
+                        className="font-secondary tw-input tw-w-full tw-px-4 tw-py-2 tw-border tw-border-gray-300 tw-rounded-md tw-shadow-sm focus:tw-outline-none focus:tw-ring-2 focus:tw-ring-black focus:tw-border-transparent"
                       />
                     ) : (
                       <input
                         type="text"
                         value={category.categoryName}
                         onChange={(e) => setEditCategoryName(e.target.value)}
-                        className="tw-input tw-w-full tw-px-4 tw-py-2 tw-border tw-border-gray-300 tw-rounded-md tw-shadow-sm focus:tw-outline-none focus:tw-ring-2 focus:tw-ring-black focus:tw-border-transparent"
+                        className="font-secondary tw-input tw-w-full tw-px-4 tw-py-2 tw-border tw-border-gray-300 tw-rounded-md tw-shadow-sm focus:tw-outline-none focus:tw-ring-2 focus:tw-ring-black focus:tw-border-transparent"
                         readOnly
                       />
                     )}
                   </td>
-                  <td className="tw-px-4 tw-py-2 tw-border">
+                  <td className="tw-px-4 tw-py-2 tw-border text-center">
                     {editCategoryId === category._id ? (
                       <div
                         className="btn-group"
@@ -156,13 +154,13 @@ const AdminCategory = () => {
                         aria-label="Basic example"
                       >
                         <button
-                          className="tw-mr-1 btn btn-success tw-text-white tw-px-4 tw-py-1"
+                          className="tw-mr-1 btn btn-success tw-text-white tw-px-4 tw-py-1 font-primary"
                           onClick={() => handleSaveEdit(category._id)}
                         >
                           Save
                         </button>
                         <button
-                          className="btn btn-black tw-text-white tw-px-4 tw-py-1"
+                          className="btn btn-black tw-text-white tw-px-4 tw-py-1 font-primary"
                           onClick={handleCancelEdit}
                         >
                           Cancel
@@ -175,17 +173,24 @@ const AdminCategory = () => {
                         aria-label="Basic example"
                       >
                         <button
-                          className="tw-mr-1 btn btn-black tw-text-white tw-px-4 tw-py-1"
+                          className="tw-mr-1 btn btn-black font-primary"
                           onClick={() => handleEdit(category)}
                         >
                           Edit
                         </button>
                         <button
-                          className="btn btn-danger tw-text-white tw-px-4 tw-py-1"
+                          className="tw-mr-1 btn btn-danger font-primary"
                           onClick={() => handleDelete(category._id)}
                         >
                           Delete
                         </button>
+                        <Link
+                          to={`/admin/category/products/${category._id}`}
+                          type="button"
+                          className="btn btn-black font-primary"
+                        >
+                          View Products
+                        </Link>
                       </div>
                     )}
                   </td>

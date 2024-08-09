@@ -1,6 +1,10 @@
 import React, { useState, useEffect } from "react";
 import { useNavigate, useParams } from "react-router-dom";
-import { getSingleProductApi, updateProductApi } from "../../apis/Apis";
+import {
+  getSingleProductApi,
+  updateProductApi,
+  getAllCategoriesApi,
+} from "../../apis/Apis";
 import { toast } from "react-toastify";
 
 const AdminEditProduct = () => {
@@ -11,12 +15,11 @@ const AdminEditProduct = () => {
   const [productName, setProductName] = useState("");
   const [productPrice, setProductPrice] = useState("");
   const [productDescription, setProductDescription] = useState("");
-  const [productCategory, setProductCategory] = useState([]);
+  const [productCategory, setProductCategory] = useState(""); // Single value for category
   const [productImage, setProductImage] = useState(null);
   const [previewImage, setPreviewImage] = useState(null);
   const [oldImage, setOldImage] = useState("");
   const [categories, setCategories] = useState([]);
-  const [selectedCategories, setSelectedCategories] = useState([]);
 
   useEffect(() => {
     getSingleProductApi(id).then((res) => {
@@ -24,9 +27,8 @@ const AdminEditProduct = () => {
       setProductName(product.productName);
       setProductPrice(product.productPrice);
       setProductDescription(product.productDescription);
-      setProductCategory(product.productCategory);
+      setProductCategory(product.productCategory); // Assuming productCategory is a single ID
       setOldImage(product.productImageUrl);
-      setSelectedCategories(product.productCategory);
     });
 
     getAllCategoriesApi().then((res) => {
@@ -41,16 +43,9 @@ const AdminEditProduct = () => {
     setPreviewImage(URL.createObjectURL(file));
   };
 
-  // Handle category selection checkbox change
+  // Handle category selection radio change
   const handleCategoryChange = (e) => {
-    const { value, checked } = e.target;
-    if (checked) {
-      setSelectedCategories([...selectedCategories, value]);
-    } else {
-      setSelectedCategories(
-        selectedCategories.filter((categoryId) => categoryId !== value)
-      );
-    }
+    setProductCategory(e.target.value);
   };
 
   // Handle form submission
@@ -60,15 +55,11 @@ const AdminEditProduct = () => {
     formData.append("productName", productName);
     formData.append("productPrice", productPrice);
     formData.append("productDescription", productDescription);
+    formData.append("productCategory", productCategory); // Single category value
     if (productImage) {
       formData.append("productImage", productImage);
     }
 
-    selectedCategories.forEach((categoryId) => {
-      formData.append("productCategory[]", categoryId);
-    });
-
-    console.log("Form Data:", formData);
     updateProductApi(id, formData)
       .then((res) => {
         if (res.data.success === false) {
@@ -85,47 +76,65 @@ const AdminEditProduct = () => {
   };
 
   return (
-    <div className="container mt-4">
+    <div
+      style={{
+        padding: "40px 100px",
+      }}
+    >
+      {" "}
       <div className="row">
         {/* Form Column */}
         <div className="col-md-6 bg-white p-4 shadow">
-          <p className="text-center fs-4 fw-bold mb-4">
-            Editing Product - <span className="text-black">{collegeName}</span>
+          <p className="text-center fs-4 font-primary mb-4">
+            Editing Product - "<span className="text-black">{productName}</span>
+            "
           </p>
           <form onSubmit={handleSubmit}>
-            <label className="form-label">Product Name</label>
+            <label className="form-label font-primary">Product Name</label>
             <input
               value={productName}
               onChange={(e) => setProductName(e.target.value)}
-              className="form-control mb-2"
+              className="form-control mb-2 font-secondary"
               type="text"
               placeholder="Enter product name"
             />
 
-            <label className="form-label">Product Description</label>
+            <label className="form-label font-primary">Product Price</label>
+            <input
+              value={productPrice}
+              onChange={(e) => setProductPrice(e.target.value)}
+              className="form-control mb-2 font-secondary"
+              type="text"
+              placeholder="Enter product price"
+            />
+
+            <label className="form-label font-primary">
+              Product Description
+            </label>
             <textarea
               value={productDescription}
               onChange={(e) => setProductDescription(e.target.value)}
-              className="form-control mb-2"
+              className="form-control mb-2 font-secondary"
               rows="3"
               placeholder="Enter product description"
             />
 
             {/* Category selection */}
-            <label className="form-label mt-3">Category</label>
-            <div className="form-check">
+            <label className="form-label mt-3 font-primary">Category</label>
+            <div className="form-check font-secondary">
               {categories.map((category) => (
                 <div key={category._id}>
                   <input
-                    type="checkbox"
+                    type="radio"
                     id={`category-${category._id}`}
                     value={category._id}
-                    checked={selectedCategories.includes(category._id)}
+                    checked={productCategory === category._id}
                     onChange={handleCategoryChange}
                     className="form-check-input"
+                    name="productCategory"
                   />
                   <label
-                    htmlFor={`course-${course._id}`}
+                    htmlFor={`category-${category._id}`}
                     className="form-check-label"
                   >
                     {category.categoryName}
@@ -134,7 +143,7 @@ const AdminEditProduct = () => {
               ))}
             </div>
 
-            <button type="submit" className="btn btn-primary mt-3">
+            <button type="submit" className="font-primary btn btn-pink mt-3">
               Update Product
             </button>
           </form>
@@ -144,7 +153,7 @@ const AdminEditProduct = () => {
         <div className="col-md-6">
           <div className="bg-white p-4 shadow">
             {/* Image upload section */}
-            <label className="form-label">Product Image</label>
+            <label className="form-label font-primary">Product Image</label>
             <input
               onChange={handleImageUpload}
               className="form-control mb-2"
@@ -153,7 +162,7 @@ const AdminEditProduct = () => {
             />
             {/* Display old image */}
             {oldImage && (
-              <div className="mt-2">
+              <div className="mt-2 font-primary">
                 <p>Old Image:</p>
                 <img
                   src={oldImage}
@@ -165,7 +174,7 @@ const AdminEditProduct = () => {
             )}
             {/* Display new image preview */}
             {previewImage && (
-              <div className="mt-2">
+              <div className="mt-2 font-primary">
                 <p>New Image Preview:</p>
                 <img
                   src={previewImage}
