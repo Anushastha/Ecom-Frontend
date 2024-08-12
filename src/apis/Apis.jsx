@@ -61,6 +61,11 @@ export const searchProductsApi = (query) =>
 export const getProductsWithCategoryIdApi = (categoryId) =>
   Api.get(`/api/products/getProductsWithCategoryId/${categoryId}`);
 
+//Wishlist APIs
+export const addSaveApi = (data) => Api.post("/api/user/add_save", data);
+export const getSavedApi = (id) => Api.get(`/api/user/get_saved/${id}`);
+export const removeSavedApi = (id) =>
+  Api.delete(`/api/user/remove_saved/${id}`, config);
 
 //Category APIs
 export const createCategoryApi = (formData) =>
@@ -72,5 +77,5 @@ export const updateCategoryApi = (id, formData) =>
   Api.put(`/api/category/update_category/${id}`, formData, config);
 export const deleteCategoryApi = (id) =>
   Api.delete(`/api/category/delete_category/${id}`, config);
-export const searchCategorysApi = (query) =>
+export const searchCategoriesApi = (query) =>
   Api.get(`/api/category/search?query=${query}`);
