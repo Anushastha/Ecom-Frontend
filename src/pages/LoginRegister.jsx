@@ -167,7 +167,32 @@ function LoginRegister() {
 
   const handleLoginSubmit = (e) => {
     e.preventDefault();
+    const errorMessages = [];
 
+    // Validate the email field
+    if (!email.trim()) {
+      errorMessages.push("Email is required.");
+    } else if (!isValidEmail(email)) {
+      errorMessages.push("Invalid email format.");
+    }
+
+    // Validate the password field
+    if (!password.trim()) {
+      errorMessages.push("Password is required.");
+    }
+
+    // Function to validate email format
+    function isValidEmail(email) {
+      const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+      return emailRegex.test(email);
+    }
+
+    if (errorMessages.length > 0) {
+      errorMessages.forEach((message) => {
+        toast.error(message);
+      });
+      return; // Prevent form submission
+    }
     const data = { email, password };
 
     loginApi(data)
