@@ -26,6 +26,8 @@ import AdminEditProduct from './pages/admin/AdminEditProduct';
 import AdminCategoryProduct from './pages/admin/AdminCategoryProduct';
 import ProductDetails from './pages/user/ProductDetails';
 import Wishlist from './pages/user/Wishlist';
+import Cart from './pages/user/Cart';
+import OrdersPage from './pages/user/Orders';
 
 const PrivateRoute = ({ children, isAdmin }) => {
     const token = localStorage.getItem('token');
@@ -87,9 +89,10 @@ function App() {
                     <Route path="user/dashboard" element={<UserDashboard />} />
                     <Route path="user/dashboard/productDetails/:id" element={<ProductDetails />} />
 
-
                     {/* User private routes */}
                     <Route path="user/wishlist" element={<PrivateRoute><Wishlist /> </PrivateRoute>} />
+                    <Route path="user/orders" element={<PrivateRoute><OrdersPage /> </PrivateRoute>} />
+                    <Route path="user/cart" element={<PrivateRoute><Cart /> </PrivateRoute>} />
 
                     {/* Admin routes */}
                     <Route path="admin/dashboard" element={<PrivateRoute isAdmin={true}><AdminDashboard /></PrivateRoute>} />

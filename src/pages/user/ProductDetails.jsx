@@ -5,10 +5,16 @@ import {
   addSaveApi,
   getSavedApi,
   removeSavedApi,
+  createCartApi,
+  getCartApi,
+  deleteCartApi,
 } from "../../apis/Apis";
 import { useParams } from "react-router-dom";
 import { toast } from "react-toastify";
-import { MdAddShoppingCart } from "react-icons/md";
+import {
+  MdAddShoppingCart,
+  MdOutlineRemoveShoppingCart,
+} from "react-icons/md";
 import { FaRegHeart, FaHeart } from "react-icons/fa6";
 
 const ProductDetails = () => {
@@ -16,46 +22,67 @@ const ProductDetails = () => {
   const [product, setProduct] = useState(null);
   const [category, setCategory] = useState(null);
   const [isFavorite, setIsFavorite] = useState(false);
-  const [savedItemId, setSavedItemId] = useState(null); // To track the saved item's ID
+  const [inCart, setInCart] = useState(false);
+  const [savedItemId, setSavedItemId] = useState(null);
+  const [cartItemId, setCartItemId] = useState(null);
 
   useEffect(() => {
-    // Fetch the product details
-    getSingleProductApi(id)
-      .then((res) => {
-        const fetchedProduct = res.data.product;
+    const fetchData = async () => {
+      try {
+        const productRes = await getSingleProductApi(id);
+        const fetchedProduct = productRes.data.product;
         setProduct(fetchedProduct);
         fetchProductCategory(fetchedProduct.productCategory);
-      })
-      .catch((err) => {
-        console.error("Error fetching product:", err);
-      });
 
-    // Check if the product is saved in the user's wishlist
-    const user = JSON.parse(localStorage.getItem("user"));
-    if (user && user._id) {
-      getSavedApi(user._id)
-        .then((res) => {
-          const savedProducts = res.data.save;
-          const savedItem = savedProducts.find(
-            (item) => item.product._id === id
-          );
-          if (savedItem) {
-            setIsFavorite(true);
-            setSavedItemId(savedItem._id); // Store the saved item's ID
-          }
-        })
-        .catch((error) => {
-          console.error("Error fetching saved products:", error);
-        });
-    }
+        // Initial fetch of saved and cart items
+        await fetchSavedAndCartItems();
+      } catch (error) {
+        console.error("Error fetching data:", error);
+      }
+    };
+
+    fetchData();
   }, [id]);
 
   const fetchProductCategory = async (categoryId) => {
     try {
       const res = await getSingleCategoryApi(categoryId);
-      setCategory(res.data.category); // Assuming the API returns category details under `category`
+      setCategory(res.data.category);
     } catch (error) {
       console.error("Error fetching category:", error);
+    }
+  };
+
+  const fetchSavedAndCartItems = async () => {
+    try {
+      const user = JSON.parse(localStorage.getItem("user"));
+      if (user && user._id) {
+        // Fetch saved items
+        const savedRes = await getSavedApi(user._id);
+        const savedProducts = savedRes.data.save;
+        const savedItem = savedProducts.find((item) => item.product._id === id);
+        if (savedItem) {
+          setIsFavorite(true);
+          setSavedItemId(savedItem._id);
+        } else {
+          setIsFavorite(false);
+          setSavedItemId(null);
+        }
+
+        // Fetch cart items
+        const cartRes = await getCartApi(user._id);
+        const cartItems = cartRes.data.cart;
+        const cartItem = cartItems.find((item) => item.product._id === id);
+        if (cartItem) {
+          setInCart(true);
+          setCartItemId(cartItem._id);
+        } else {
+          setInCart(false);
+          setCartItemId(null);
+        }
+      }
+    } catch (error) {
+      console.error("Error fetching saved and cart items:", error);
     }
   };
 
@@ -65,19 +92,20 @@ const ProductDetails = () => {
       toast.error("Please log in to add products to wishlist.");
       return;
     }
+
     try {
       if (isFavorite) {
-        // Remove from saved list
-        const res = await removeSavedApi(savedItemId); // Use the saved item's ID
-        if (!res.data.success) {
-          toast.error(res.data.message);
-        } else {
+        // Remove from wishlist
+        const res = await removeSavedApi(savedItemId);
+        if (res.data.success) {
+          setIsFavorite(false);
+          setSavedItemId(null);
           toast.success("Product removed from wishlist");
-          setIsFavorite(false); // Update state
-          setSavedItemId(null); // Reset the saved item's ID
+        } else {
+          toast.error(res.data.message);
         }
       } else {
-        // Add to saved list
+        // Add to wishlist
         const data = {
           userId: user._id,
           productId: id,
@@ -87,17 +115,64 @@ const ProductDetails = () => {
           productPrice: product.productPrice,
         };
         const res = await addSaveApi(data);
-        if (!res.data.success) {
-          toast.error(res.data.message);
-        } else {
+        if (res.data.success) {
+          setIsFavorite(true);
+          setSavedItemId(res.data.save._id);
           toast.success("Product added to wishlist");
-          setIsFavorite(true); // Update state
-          setSavedItemId(res.data.save._id); // Store the new saved item's ID
+        } else {
+          toast.error(res.data.message);
         }
       }
+
+      // Re-fetch saved items to ensure state consistency
+      await fetchSavedAndCartItems();
     } catch (error) {
       console.error("Error saving or removing product:", error);
       toast.error("Failed to save or remove product");
+    }
+  };
+
+  const handleCartToggle = async () => {
+    const user = JSON.parse(localStorage.getItem("user"));
+    if (!user || !user._id) {
+      toast.error("Please log in to add or remove items from the cart.");
+      return;
+    }
+
+    try {
+      if (inCart) {
+        // Remove from cart
+        const res = await deleteCartApi(cartItemId);
+        if (res.data.success) {
+          setInCart(false);
+          setCartItemId(null);
+          toast.success("Product removed from cart");
+        } else {
+          toast.error(res.data.message);
+        }
+      } else {
+        // Add to cart
+        const data = {
+          userId: user._id,
+          productId: id,
+          quantity: 1,
+          status: "pending",
+        };
+        const res = await createCartApi(data);
+        if (res.data.success) {
+          setInCart(true);
+          setCartItemId(res.data.cart._id);
+          toast.success("Product added to cart");
+        } else {
+          toast.error(res.data.message);
+        }
+      }
+
+      // Re-fetch cart items to ensure state consistency
+      await fetchSavedAndCartItems();
+    } catch (error) {
+      console.error("Error adding or removing from cart:", error);
+      toast.error("Failed to add or remove product from cart");
     }
   };
 
@@ -134,15 +209,22 @@ const ProductDetails = () => {
                     <FaHeart size={20} />
                   ) : (
                     <FaRegHeart size={20} />
-                  )}{" "}
+                  )}
                 </span>
                 {isFavorite ? "Remove from Wishlist" : "Add to Wishlist"}
               </button>
-              <button className="tw-mr-1 btn btn-black font-secondary tw-flex tw-items-center tw-cursor-pointer">
+              <button
+                onClick={handleCartToggle}
+                className="tw-mr-1 btn btn-black font-secondary tw-flex tw-items-center tw-cursor-pointer"
+              >
                 <span className="tw-mr-2">
-                  <MdAddShoppingCart size={20} />
+                  {inCart ? (
+                    <MdOutlineRemoveShoppingCart size={20} />
+                  ) : (
+                    <MdAddShoppingCart size={20} />
+                  )}
                 </span>
-                Add to Cart
+                {inCart ? "Remove from Cart" : "Add to Cart"}
               </button>
             </div>
           </div>

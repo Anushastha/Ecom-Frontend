@@ -19,33 +19,32 @@ const config = {
 export const loginApi = (data) => Api.post("/api/user/login", data);
 export const registerApi = (data) => Api.post("/api/user/create", data);
 export const sendEmailApi = (data) =>
-    Api.post("/api/user/reset_password", data);
-  export const verifyCodeApi = (data) =>
-    Api.post("/api/user/reset_code", data, config);
-  export const updatePasswordApi = (data) =>
-    Api.post("/api/user/update_password", data);
-  
-  export const changePassword = async (data, token) => {
-    try {
-      const response = await Api.post("/api/user/change_password", data, {
-        headers: {
-          Authorization: `Bearer ${token}`,
-        },
-      });
-      return response.data;
-    } catch (error) {
-      throw error.response.data;
-    }
-  };
-  
-  export const getUserProfileApi = () => {
-    return Api.get("/api/user/get_profile", config);
-  };
-  export const updateUserProfileApi = (userId, formData) =>
-    Api.put(`/api/user/update_profile/${userId}`, formData, config);
-  
+  Api.post("/api/user/reset_password", data);
+export const verifyCodeApi = (data) =>
+  Api.post("/api/user/reset_code", data, config);
+export const updatePasswordApi = (data) =>
+  Api.post("/api/user/update_password", data);
 
-  // Product APIs
+export const changePassword = async (data, token) => {
+  try {
+    const response = await Api.post("/api/user/change_password", data, {
+      headers: {
+        Authorization: `Bearer ${token}`,
+      },
+    });
+    return response.data;
+  } catch (error) {
+    throw error.response.data;
+  }
+};
+
+export const getUserProfileApi = () => {
+  return Api.get("/api/user/get_profile", config);
+};
+export const updateUserProfileApi = (userId, formData) =>
+  Api.put(`/api/user/update_profile/${userId}`, formData, config);
+
+// Product APIs
 export const createProductApi = (formData) =>
   Api.post("/api/products/create_product", formData);
 export const getAllProductsApi = () => Api.get("/api/products/get_products");
@@ -70,7 +69,8 @@ export const removeSavedApi = (id) =>
 //Category APIs
 export const createCategoryApi = (formData) =>
   Api.post("/api/category/create_category", formData);
-export const getAllCategoriesApi = () => Api.get("/api/category/get_categories");
+export const getAllCategoriesApi = () =>
+  Api.get("/api/category/get_categories");
 export const getSingleCategoryApi = (id) =>
   Api.get(`/api/category/get_category/${id}`);
 export const updateCategoryApi = (id, formData) =>
@@ -79,3 +79,17 @@ export const deleteCategoryApi = (id) =>
   Api.delete(`/api/category/delete_category/${id}`, config);
 export const searchCategoriesApi = (query) =>
   Api.get(`/api/category/search?query=${query}`);
+
+//Cart APIs
+export const createCartApi = (data) => Api.post("/api/cart/create_cart", data);
+export const getCartApi = (id) => Api.get(`/api/cart/get_cart/${id}`);
+export const deleteCartApi = (id) =>
+  Api.delete(`/api/cart/remove_cart/${id}`, config);
+
+//Order APIs
+export const orderCategory = (data) => Api.post(`/api/order/create`, data);
+export const getOrders = () => Api.get(`/api/order/getOrders`, config);
+export const getOrdersByuserId = (userId) =>
+  Api.get(`/api/order/getOrdersByUser/${userId}`);
+export const updateOrdersApi = (orderId, formData) =>
+  Api.put(`/api/order/update_order/${orderId}/status`, formData, config);
