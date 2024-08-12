@@ -3,6 +3,7 @@ import { Link, useNavigate } from "react-router-dom";
 import { toast } from "react-toastify";
 import { sendEmailApi } from "../apis/Apis";
 import "../styles/tailwind.css";
+import { FaEnvelope } from "react-icons/fa";
 
 const SendEmail = () => {
   const [email, setEmail] = useState("");
@@ -38,7 +39,7 @@ const SendEmail = () => {
     <>
       <div className="row vh-100 d-flex align-items-center justify-content-center">
         <div className="col-md-5 bg-white p-5">
-          <p className="text-center my-4 font-primary tw-text-blue tw-text-4xl">
+          <p className="text-center my-4 font-primary tw-text-4xl">
             <u>Forgot Password?</u>
           </p>
           <form
@@ -79,18 +80,13 @@ const SendEmail = () => {
                       padding: "5px",
                     }}
                   >
-                    <img
-                      src="/assets/svg/mail.svg"
-                      style={{
-                        height: "20px",
-                      }}
-                    />
+                    <FaEnvelope size={20} />
                   </div>
                 </div>
               </div>
             </div>
             <button
-              className="btn btn-blue tw-text-sm tw-mt-3 font-primary"
+              className="btn btn-black tw-text-sm tw-mt-3 font-primary"
               type="submit"
               onClick={handleSubmit}
             >

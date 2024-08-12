@@ -1,8 +1,10 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import { changePassword } from "../../apis/Apis";
 import "../../styles/tailwind.css";
+import "../../styles/passStrength.css";
 import { toast } from "react-toastify";
 import { FaEye, FaEyeSlash } from "react-icons/fa";
+import { useNavigate } from "react-router-dom";
 
 const ChangePassword = () => {
   const [currentPassword, setCurrentPassword] = useState("");
@@ -12,13 +14,70 @@ const ChangePassword = () => {
   const [passwordVisible, setPasswordVisible] = useState(false);
   const [newPasswordVisible, setNewPasswordVisible] = useState(false);
   const [confirmPasswordVisible, setConfirmPasswordVisible] = useState(false);
+  const navigate = useNavigate();
+
+  const [passwordStrength, setPasswordStrength] = useState("");
+  const [passwordStrengthClass, setPasswordStrengthClass] = useState("");
+  const [errors, setErrors] = useState({
+    currentPassword: "",
+    newPassword: "",
+    confirmNewPassword: "",
+  });
+
+  const evaluatePasswordStrength = (password) => {
+    const lengthCriteria = password.length >= 8 && password.length <= 12;
+    const numberCriteria = /\d/.test(password);
+    const specialCharCriteria = /[!@#$%^&*(),.?":{}|<>]/.test(password);
+
+    if (lengthCriteria && numberCriteria && specialCharCriteria) {
+      setPasswordStrength("Strong");
+      setPasswordStrengthClass("strong");
+    } else if (lengthCriteria && (numberCriteria || specialCharCriteria)) {
+      setPasswordStrength("Moderate");
+      setPasswordStrengthClass("moderate");
+    } else {
+      setPasswordStrength("Weak");
+      setPasswordStrengthClass("weak");
+    }
+  };
 
   const handleSubmit = async (e) => {
     e.preventDefault();
 
-    if (newPassword !== confirmNewPassword) {
-      toast.error("New passwords do not match");
-      return;
+    // Initialize an array to store error messages
+    const errorMessages = [];
+
+    // Check if all fields are filled
+    if (!currentPassword.trim()) {
+      errorMessages.push("Current password is required.");
+    }
+    if (!newPassword.trim()) {
+      errorMessages.push("New password is required.");
+    }
+    if (!confirmNewPassword.trim()) {
+      errorMessages.push("Confirm new password is required.");
+    }
+
+    // Validate new password strength
+    if (newPassword && !passwordStrengthClass) {
+      errorMessages.push("New password does not meet the required criteria.");
+    }
+
+    // Validate password match
+    if (
+      newPassword &&
+      confirmNewPassword &&
+      newPassword !== confirmNewPassword
+    ) {
+      errorMessages.push("New passwords do not match.");
+    }
+
+    // If there are any errors, display all the error messages using toast.error()
+    if (errorMessages.length > 0) {
+      errorMessages.forEach((message) => {
+        toast.error(message);
+      });
+      return; // Prevent form submission
     }
 
     try {
@@ -28,6 +87,7 @@ const ChangePassword = () => {
         token
       );
       toast.success(response.message);
+      navigate("/user/dashboard");
     } catch (error) {
       toast.error(error.message || "An error occurred");
     }
@@ -80,7 +140,6 @@ const ChangePassword = () => {
                   placeholder="Old Password"
                   value={currentPassword}
                   onChange={(e) => setCurrentPassword(e.target.value)}
-                  required
                 />
                 <div
                   className="bg-gray-100"
@@ -119,8 +178,10 @@ const ChangePassword = () => {
                   type={newPasswordVisible ? "text" : "password"}
                   placeholder="New password"
                   value={newPassword}
-                  onChange={(e) => setNewPassword(e.target.value)}
-                  required
+                  onChange={(e) => {
+                    setNewPassword(e.target.value);
+                    evaluatePasswordStrength(e.target.value); // Evaluate password strength on change
+                  }}
                 />
                 <div
                   className="bg-gray-100"
@@ -141,6 +202,18 @@ const ChangePassword = () => {
                   )}
                 </div>
               </div>
+              {newPassword && (
+                <div className="password-strength-meter">
+                  <div
+                    className={`password-strength-bar ${passwordStrengthClass}`}
+                  ></div>
+                  <span
+                    className={`password-strength-text ${passwordStrengthClass}`}
+                  >
+                    Password Strength: {passwordStrength}
+                  </span>
+                </div>
+              )}
             </div>
             <div className="tw-mb-4">
               <p className="tw-text-black tw-font-secondary tw-font-bold">
@@ -160,7 +233,6 @@ const ChangePassword = () => {
                   placeholder="Confirm Password"
                   value={confirmNewPassword}
                   onChange={(e) => setConfirmNewPassword(e.target.value)}
-                  required
                 />
                 <div
                   className="bg-gray-100"

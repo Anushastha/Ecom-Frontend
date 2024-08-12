@@ -153,7 +153,6 @@ function LoginRegister() {
       .then((res) => {
         if (res.data.success) {
           toast.success(res.data.message);
-          window.location.reload();
           navigate("/auth?mode=login");
         } else {
           toast.error(res.data.message);

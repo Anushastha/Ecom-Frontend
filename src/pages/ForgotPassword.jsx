@@ -3,6 +3,7 @@ import { useLocation, useNavigate } from "react-router-dom";
 import { toast } from "react-toastify";
 import { verifyCodeApi } from "../apis/Apis";
 import "../styles/tailwind.css";
+import { TbPasswordUser } from "react-icons/tb";
 
 const ForgotPasswordCode = () => {
   const [verificationCode, setVerificationCode] = useState("");
@@ -42,7 +43,7 @@ const ForgotPasswordCode = () => {
     <>
       <div className="row vh-100 d-flex align-items-center justify-content-center">
         <div className="col-md-5 bg-white p-5">
-          <p className="text-center my-4 font-primary tw-text-blue tw-text-4xl">
+          <p className="text-center my-4 font-primary tw-text-4xl">
             <u>Enter Verification Code</u>
           </p>
           <form
@@ -90,18 +91,13 @@ const ForgotPasswordCode = () => {
                       padding: "5px",
                     }}
                   >
-                    <img
-                      src="/assets/svg/password-underline.svg"
-                      style={{
-                        height: "20px",
-                      }}
-                    />
+                    <TbPasswordUser size={20} />
                   </div>
                 </div>
               </div>
             </div>
             <button
-              className="btn btn-blue tw-text-sm font-primary"
+              className="btn btn-black tw-text-sm font-primary"
               type="submit"
               onSubmit={handleVerifyCode}
             >

@@ -1,17 +1,41 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import { useLocation, useNavigate } from "react-router-dom";
 import { toast } from "react-toastify";
 import { updatePasswordApi } from "../apis/Apis";
+import { FaEye, FaEyeSlash } from "react-icons/fa";
+import "../styles/passStrength.css"; // Ensure this file contains your CSS styles
+
+const evaluatePasswordStrength = (password) => {
+  const lengthCriteria = password.length >= 8 && password.length <= 12;
+  const numberCriteria = /\d/.test(password);
+  const specialCharCriteria = /[!@#$%^&*(),.?":{}|<>]/.test(password);
+
+  if (lengthCriteria && numberCriteria && specialCharCriteria) {
+    return { strength: "Strong", className: "strong" };
+  } else if (lengthCriteria && (numberCriteria || specialCharCriteria)) {
+    return { strength: "Moderate", className: "moderate" };
+  } else {
+    return { strength: "Weak", className: "weak" };
+  }
+};
 
 const ResetPassword = () => {
   const [newPassword, setNewPassword] = useState("");
   const [confirmPassword, setConfirmPassword] = useState("");
   const [newPasswordVisible, setNewPasswordVisible] = useState(false);
   const [confirmPasswordVisible, setConfirmPasswordVisible] = useState(false);
+  const [passwordStrength, setPasswordStrength] = useState("Weak");
+  const [passwordStrengthClass, setPasswordStrengthClass] = useState("weak");
   const navigate = useNavigate();
   const location = useLocation();
 
   const userEmail = location.state && location.state.User_email;
+
+  useEffect(() => {
+    const { strength, className } = evaluatePasswordStrength(newPassword);
+    setPasswordStrength(strength);
+    setPasswordStrengthClass(className);
+  }, [newPassword]);
 
   const handleChangePassword = (e) => {
     setNewPassword(e.target.value);
@@ -77,13 +101,15 @@ const ResetPassword = () => {
               <b className="tw-text-blue tw-font-secondary tw-mt-5">
                 Enter password
               </b>
-              <div className="tw-flex tw-items-center tw-mb-5">
+              <div className="tw-flex tw-items-center">
                 <input
                   type={newPasswordVisible ? "text" : "password"}
                   className="tw-border-none tw-p-2 focus:tw-outline-none"
                   value={newPassword}
                   onChange={handleChangePassword}
                   placeholder="Password"
+                  minLength={8}
+                  maxLength={12}
                   style={{
                     backgroundColor: "#F3F4F4",
                     color: "#A8AAAA",
@@ -105,20 +131,27 @@ const ResetPassword = () => {
                   }}
                   onClick={toggleNewPasswordVisibility}
                 >
-                  <img
-                    src={
-                      newPasswordVisible
-                        ? "/assets/svg/eye.svg"
-                        : "/assets/svg/eye-crossed.svg"
-                    }
-                    style={{
-                      height: "20px",
-                    }}
-                  />
+                  {newPasswordVisible ? (
+                    <FaEye size={20} />
+                  ) : (
+                    <FaEyeSlash size={20} />
+                  )}
                 </div>
               </div>
+              {newPassword && (
+                <div className="password-strength-meter">
+                  <div
+                    className={`password-strength-bar ${passwordStrengthClass}`}
+                  ></div>
+                  <span
+                    className={`password-strength-text ${passwordStrengthClass}`}
+                  >
+                    Password Strength: {passwordStrength}
+                  </span>
+                </div>
+              )}
             </div>
-            <div className="tw-mb-4">
+            <div className="tw-mb-4 tw-mt-4">
               <b className="tw-text-blue tw-font-secondary tw-mt-5">
                 Confirm new password
               </b>
@@ -150,22 +183,17 @@ const ResetPassword = () => {
                   }}
                   onClick={toggleConfirmPasswordVisibility}
                 >
-                  <img
-                    src={
-                      confirmPasswordVisible
-                        ? "/assets/svg/eye.svg"
-                        : "/assets/svg/eye-crossed.svg"
-                    }
-                    style={{
-                      height: "20px",
-                    }}
-                  />
+                  {confirmPasswordVisible ? (
+                    <FaEye size={20} />
+                  ) : (
+                    <FaEyeSlash size={20} />
+                  )}
                 </div>
               </div>
             </div>
           </div>
           <button
-            className="btn btn-blue tw-text-sm tw-mt-3 font-primary"
+            className="btn btn-black tw-text-sm tw-mt-3 font-primary"
             type="submit"
           >
             Submit
