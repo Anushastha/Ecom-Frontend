@@ -189,12 +189,21 @@ const AdminProducts = () => {
                 />
                 {previewImage && (
                   <div>
-                    <img
-                      src={previewImage}
-                      alt="Product Preview Image"
-                      className="img-thumbnail mb-2"
-                      style={{ maxHeight: "200px" }}
-                    />
+                    <div
+                      className="mb-2"
+                      style={{
+                        backgroundImage: `url(${previewImage})`,
+                        backgroundSize: "contain",
+                        backgroundRepeat: "no-repeat",
+                        backgroundPosition: "center",
+                        maxHeight: "200px",
+                        height: "100px",
+                        width: "100px",
+                        border: "1px solid #ddd",
+                        borderRadius: "4px",
+                      }}
+                      aria-label="Product Preview Image"
+                    ></div>
                   </div>
                 )}
               </div>
@@ -238,7 +247,7 @@ const AdminProducts = () => {
                     <td className="d-flex justify-content-center">
                       <div
                         alt={`Product: ${product.productImage}`}
-                        className="img-fluid rounded object-cover mt-2"
+                        className="-fluid rounded object-cover mt-2"
                         style={{
                           backgroundImage: `url(${product.productImageUrl})`,
                           backgroundSize: "cover",

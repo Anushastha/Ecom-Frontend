@@ -2,6 +2,7 @@ import React, { useState } from "react";
 import { changePassword } from "../../apis/Apis";
 import "../../styles/tailwind.css";
 import { toast } from "react-toastify";
+import { FaEye, FaEyeSlash } from "react-icons/fa";
 
 const ChangePassword = () => {
   const [currentPassword, setCurrentPassword] = useState("");
@@ -62,7 +63,7 @@ const ChangePassword = () => {
         >
           <div id="password-details">
             <div className="tw-mb-4">
-              <p className="tw-text-black tw-font-secondary">
+              <p className="tw-text-black tw-font-secondary tw-font-bold">
                 Enter your current password
               </p>
               <div className="tw-flex tw-items-center">
@@ -89,24 +90,20 @@ const ChangePassword = () => {
                     alignItems: "center",
                     backgroundColor: "#F3F4F4",
                     padding: "5px",
+                    cursor: "pointer",
                   }}
                   onClick={togglePasswordVisibility}
                 >
-                  <img
-                    src={`/assets/svg/${
-                      passwordVisible ? "eye" : "eye-crossed"
-                    }.svg`}
-                    alt="eye"
-                    style={{
-                      height: "20px",
-                      cursor: "pointer",
-                    }}
-                  />{" "}
+                  {passwordVisible ? (
+                    <FaEye size={23} />
+                  ) : (
+                    <FaEyeSlash size={23} />
+                  )}
                 </div>
               </div>
             </div>
             <div className="tw-mb-4">
-              <p className="tw-text-black tw-font-secondary">
+              <p className="tw-text-black tw-font-secondary tw-font-bold">
                 Enter new Password
               </p>
               <div className="tw-flex tw-items-center">
@@ -133,24 +130,20 @@ const ChangePassword = () => {
                     alignItems: "center",
                     backgroundColor: "#F3F4F4",
                     padding: "5px",
+                    cursor: "pointer",
                   }}
                   onClick={toggleNewPasswordVisibility}
                 >
-                  <img
-                    src={`/assets/svg/${
-                      newPasswordVisible ? "eye" : "eye-crossed"
-                    }.svg`}
-                    alt="eye"
-                    style={{
-                      height: "20px",
-                      cursor: "pointer",
-                    }}
-                  />{" "}
+                  {newPasswordVisible ? (
+                    <FaEye size={23} />
+                  ) : (
+                    <FaEyeSlash size={23} />
+                  )}
                 </div>
               </div>
             </div>
             <div className="tw-mb-4">
-              <p className="tw-text-black tw-font-secondary">
+              <p className="tw-text-black tw-font-secondary tw-font-bold">
                 Confirm new password
               </p>
               <div className="tw-flex tw-items-center">
@@ -177,19 +170,15 @@ const ChangePassword = () => {
                     alignItems: "center",
                     backgroundColor: "#F3F4F4",
                     padding: "5px",
+                    cursor: "pointer",
                   }}
                   onClick={toggleConfirmPasswordVisibility}
                 >
-                  <img
-                    src={`/assets/svg/${
-                      confirmPasswordVisible ? "eye" : "eye-crossed"
-                    }.svg`}
-                    alt="eye"
-                    style={{
-                      height: "20px",
-                      cursor: "pointer",
-                    }}
-                  />{" "}
+                  {confirmPasswordVisible ? (
+                    <FaEye size={23} />
+                  ) : (
+                    <FaEyeSlash size={23} />
+                  )}
                 </div>
               </div>
             </div>

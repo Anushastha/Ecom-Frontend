@@ -11,10 +11,7 @@ import {
 } from "../../apis/Apis";
 import { useParams } from "react-router-dom";
 import { toast } from "react-toastify";
-import {
-  MdAddShoppingCart,
-  MdOutlineRemoveShoppingCart,
-} from "react-icons/md";
+import { MdAddShoppingCart, MdOutlineRemoveShoppingCart } from "react-icons/md";
 import { FaRegHeart, FaHeart } from "react-icons/fa6";
 
 const ProductDetails = () => {
@@ -181,11 +178,17 @@ const ProductDetails = () => {
       {product && (
         <div className="row bg-white p-5 tw-rounded-2xl">
           <div className="col-md-5">
-            <img
-              src={product.productImageUrl}
-              alt={product.productName}
+            <div
               className="img-fluid"
-              style={{ maxWidth: "100%", height: "90%" }}
+              style={{
+                backgroundImage: `url(${product.productImageUrl})`,
+                backgroundSize: "contain",
+                backgroundRepeat: "no-repeat",
+                backgroundPosition: "center",
+                maxWidth: "100%",
+                height: "90%",
+              }}
+              aria-label={product.productName}
             />
           </div>
           <div className="col-md-7">

@@ -4,6 +4,7 @@ import { toast } from "react-toastify";
 import { getUserProfileApi, updateUserProfileApi } from "../../apis/Apis";
 import { jwtDecode } from "jwt-decode";
 import "../../styles/tailwind.css";
+import { FaUser, FaEnvelope, FaPhone } from "react-icons/fa";
 
 const EditProfile = () => {
   const [userData, setUserData] = useState(null);
@@ -139,22 +140,31 @@ const EditProfile = () => {
             className="tw-flex tw-flex-col tw-justify-center tw-items-center tw-mb-4 md:tw-mb-0"
           >
             {previewImage ? (
-              <img
-                src={previewImage}
-                alt="Profile Preview"
+              <div
                 className="profile-image-preview tw-rounded-full"
-                style={{ objectFit: "cover", width: "200px", height: "200px" }}
+                style={{
+                  backgroundImage: `url(${previewImage})`,
+                  backgroundSize: "cover",
+                  backgroundPosition: "center",
+                  width: "200px",
+                  height: "200px",
+                }}
+                alt="Profile Preview"
               />
             ) : userData.profileImage ? (
-              <img
-                src={userData.profileImage}
-                alt="Profile Image"
+              <div
                 className="tw-rounded-full"
-                style={{ objectFit: "cover", width: "200px", height: "200px" }}
+                style={{
+                  backgroundImage: `url(${userData.profileImage})`,
+                  backgroundSize: "cover",
+                  backgroundPosition: "center",
+                  width: "200px",
+                  height: "200px",
+                }}
               />
             ) : (
               <div
-                className="tw-rounded-full tw-font-secondary tw-font-bold tw-bg-pink-700 tw-text-white tw-flex tw-items-center tw-justify-center"
+                className="tw-rounded-full tw-font-secondary tw-font-bold tw-bg-black tw-text-white tw-flex tw-items-center tw-justify-center"
                 style={{ width: "200px", height: "200px", fontSize: "100px" }}
               >
                 {userData.fullName
@@ -164,7 +174,7 @@ const EditProfile = () => {
             )}
             <label
               htmlFor="file-upload"
-              className="btn btn-outline-blue btn-sm tw-mt-4 font-primary"
+              className="btn btn-outline-black btn-sm tw-mt-4 font-primary"
             >
               <span>Update Image</span>
               <input
@@ -205,13 +215,7 @@ const EditProfile = () => {
                     padding: "5px",
                   }}
                 >
-                  <img
-                    src="/assets/svg/user.svg"
-                    style={{
-                      height: "20px",
-                    }}
-                    alt="User Icon"
-                  />
+                  <FaUser size={20} />
                 </div>
               </div>
             </div>
@@ -219,6 +223,7 @@ const EditProfile = () => {
               <p className="tw-text-blue tw-font-secondary">Email address</p>
               <div className="tw-flex tw-items-center">
                 <input
+                  type="email"
                   className="tw-border-none tw-p-2 focus:tw-outline-none"
                   style={{
                     backgroundColor: "#F3F4F4",
@@ -243,13 +248,7 @@ const EditProfile = () => {
                     padding: "5px",
                   }}
                 >
-                  <img
-                    src="/assets/svg/mail.svg"
-                    style={{
-                      height: "20px",
-                    }}
-                    alt="Mail Icon"
-                  />
+                  <FaEnvelope size={20} />
                 </div>
               </div>
             </div>
@@ -281,13 +280,7 @@ const EditProfile = () => {
                     padding: "5px",
                   }}
                 >
-                  <img
-                    src="/assets/svg/phone-blue.svg"
-                    style={{
-                      height: "20px",
-                    }}
-                    alt="Phone Icon"
-                  />
+                  <FaPhone size={20} />
                 </div>
               </div>
             </div>
@@ -295,7 +288,7 @@ const EditProfile = () => {
         </div>
         <div style={{ display: "flex", justifyContent: "center" }}>
           <button
-            className="btn btn-blue font-primary"
+            className="btn btn-black font-primary"
             onClick={handleSaveProfile}
           >
             Save Profile

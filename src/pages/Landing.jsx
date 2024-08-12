@@ -17,11 +17,17 @@ const LandingPage = () => {
             Shop Now
           </Link>
         </div>
-        <img
-          src="/assets/images/hero-bg.jpg"
-          alt="Hero Background"
+        <div
           className="hero-bg"
-        />
+          style={{
+            backgroundImage: `url("/assets/images/hero-bg.jpg")`,
+            backgroundSize: "cover",
+            backgroundPosition: "center",
+            width: "100%",
+            height: "auto",
+          }}
+          aria-label="Hero Background"
+        ></div>
       </section>
 
       {/* Featured Products Section */}
@@ -30,11 +36,17 @@ const LandingPage = () => {
           <h2 className="section-title">Featured Products</h2>
           <div className="product-grid">
             <div className="product-card">
-              <img
-                src="/assets/images/productimage.jpg"
-                alt="Product 1"
+              <div
                 className="product-image"
-              />
+                style={{
+                  backgroundImage: `url("/assets/images/productimage.jpg")`,
+                  backgroundSize: "cover",
+                  backgroundPosition: "center",
+                  width: "100%",
+                  height: "200px",
+                }}
+                aria-label="Product 1"
+              ></div>
               <h3 className="product-title">Hydrating Serum</h3>
               <p className="product-price">$29.99</p>
               <Link to="/product/1" className="btn-outline font-primary">
@@ -42,18 +54,23 @@ const LandingPage = () => {
               </Link>
             </div>
             <div className="product-card">
-              <img
-                src="/assets/images/productimage.jpg"
-                alt="Product 2"
+              <div
                 className="product-image"
-              />
+                style={{
+                  backgroundImage: `url("/assets/images/productimage.jpg")`,
+                  backgroundSize: "cover",
+                  backgroundPosition: "center",
+                  width: "100%",
+                  height: "200px",
+                }}
+                aria-label="Product 2"
+              ></div>
               <h3 className="product-title font-secondary">Brightening Mask</h3>
               <p className="product-price font-secondary">$19.99</p>
               <Link to="/product/2" className="btn-outline font-primary">
                 View Details
               </Link>
             </div>
-            {/* Add more product cards as needed */}
           </div>
         </div>
       </section>
@@ -67,11 +84,17 @@ const LandingPage = () => {
             checkout.
           </p>
         </div>
-        <img
-          src="/assets/images/productimage.jpg"
-          alt="Promotion"
+        <div
           className="promo-bg"
-        />
+          style={{
+            backgroundImage: `url("/assets/images/productimage.jpg")`,
+            backgroundSize: "cover",
+            backgroundPosition: "center",
+            width: "100%",
+            height: "100%",
+          }}
+          aria-label="Promotion"
+        ></div>
       </section>
 
       {/* Testimonials Section */}
@@ -102,7 +125,6 @@ const LandingPage = () => {
                 Regular Shopper
               </span>
             </div>
-            {/* Add more testimonial cards as needed */}
           </div>
         </div>
       </section>

@@ -32,7 +32,6 @@ const AdminCategoryProduct = () => {
             toast.error(res.data.message);
           } else {
             toast.success(res.data.message);
-            // Update state to remove the deleted product
             setProducts(
               products.filter((product) => product._id !== productId)
             );
@@ -89,16 +88,21 @@ const AdminCategoryProduct = () => {
                     justifyContent: "space-between",
                   }}
                 >
-                  <img
-                    src={product.productImageUrl || "placeholder.jpg"}
-                    alt={product.productName || "Product Image"}
+                  <div
+                    className="product-image"
                     style={{
-                      height: "80px",
-                      width: "auto",
-                      objectFit: "cover",
+                      backgroundImage: `url(${
+                        product.productImageUrl || "placeholder.jpg"
+                      })`,
+                      backgroundSize: "cover",
+                      backgroundPosition: "center",
                       borderRadius: "5px",
+                      height: "100px",
+                      width: "100px",
                     }}
-                  />
+                    aria-label={product.productName || "Product Image"}
+                  ></div>
+
                   <div
                     style={{
                       flex: 1,
@@ -116,7 +120,7 @@ const AdminCategoryProduct = () => {
                   <button
                     className="btn btn-danger font-primary"
                     style={{ marginLeft: "15px" }}
-                    onClick={() => handleDelete(product._id)} // Use product._id here
+                    onClick={() => handleDelete(product._id)}
                   >
                     Delete
                   </button>

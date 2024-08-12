@@ -164,24 +164,37 @@ const AdminEditProduct = () => {
             {oldImage && (
               <div className="mt-2 font-primary">
                 <p>Old Image:</p>
-                <img
-                  src={oldImage}
-                  alt="Old Product Image"
-                  className="img-fluid mb-2"
-                  style={{ maxHeight: "200px" }}
-                />
+                <div
+                  className="-fluid mb-2"
+                  style={{
+                    backgroundImage: `url(${oldImage})`,
+                    backgroundSize: "contain",
+                    backgroundRepeat: "no-repeat",
+                    backgroundPosition: "center",
+                    height: "200px",
+                    borderRadius: "4px",
+                    border: "1px solid #ddd",
+                  }}
+                  aria-label="Old Product Image"
+                ></div>
               </div>
             )}
             {/* Display new image preview */}
             {previewImage && (
               <div className="mt-2 font-primary">
                 <p>New Image Preview:</p>
-                <img
-                  src={previewImage}
-                  alt="New Product Preview"
-                  className="img-fluid mb-2"
-                  style={{ maxHeight: "200px" }}
-                />
+                <div
+                  style={{
+                    backgroundImage: `url(${previewImage})`,
+                    backgroundSize: "contain",
+                    backgroundRepeat: "no-repeat",
+                    backgroundPosition: "center",
+                    height: "200px",
+                    borderRadius: "4px",
+                    border: "1px solid #ddd",
+                  }}
+                  aria-label="New Product Preview"
+                ></div>
               </div>
             )}
           </div>

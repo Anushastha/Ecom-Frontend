@@ -147,7 +147,7 @@ const Cart = ({}) => {
           className="container mt-5 bg-white tw-rounded-2xl"
           style={{
             height: "max-content",
-            padding: "30px 40px",
+            padding: "30px 20px",
             marginBottom: "100px",
             maxWidth: "90%",
             minHeight: "400px",
@@ -166,7 +166,8 @@ const Cart = ({}) => {
               style={{
                 display: "flex",
                 justifyContent: "space-between",
-                gap: "50px",
+                width: "100%",
+                gap: "15px",
               }}
             >
               {carts.length > 0 ? (
@@ -184,6 +185,7 @@ const Cart = ({}) => {
                       width: "500px",
                       display: "flex",
                       alignItems: "center",
+                      width: "65%",
                     }}
                   >
                     <div className="col-md-3" style={{ flexShrink: 0 }}>
@@ -200,11 +202,11 @@ const Cart = ({}) => {
                       ></div>
                     </div>
                     <div
-                      className="col-md-8"
+                      className="col-md-9"
                       style={{
                         display: "flex",
-                        flexDirection: "column",
-                        padding: "0 10px",
+                        flexDirection: "row",
+                        padding: "20px 10px",
                       }}
                     >
                       <div
@@ -218,7 +220,7 @@ const Cart = ({}) => {
                         }}
                       >
                         <div>
-                          <p className="font-primary tw-text-lg">
+                          <p className="font-primary tw-text-md">
                             {item.product?.productName || "N/A"}
                           </p>
                           <p className="font-secondary tw-text-gray-600 tw-text-sm">
@@ -267,21 +269,20 @@ const Cart = ({}) => {
                           </div>
                         </div>
                       </div>
-                    </div>
-                    <div
-                      className="col-md-1"
-                      style={{
-                        flexShrink: 0,
-                        display: "flex",
-                        alignItems: "center",
-                      }}
-                    >
-                      <FaTrash
-                        onClick={() => handleDeleteCart(item._id)}
-                        title="Remove from cart?"
-                        style={{ cursor: "pointer" }}
-                        className="tw-text-red-500"
-                      />
+                      <div
+                        style={{
+                          flexShrink: 0,
+                          display: "flex",
+                          alignItems: "center",
+                        }}
+                      >
+                        <FaTrash
+                          onClick={() => handleDeleteCart(item._id)}
+                          title="Remove from cart?"
+                          style={{ cursor: "pointer" }}
+                          className="tw-text-red-500 mr-2"
+                        />
+                      </div>
                     </div>
                   </div>
                 ))
@@ -292,7 +293,11 @@ const Cart = ({}) => {
               )}
 
               {carts.length > 0 && (
-                <div>
+                <div
+                  style={{
+                    width: "35%",
+                  }}
+                >
                   <p className="mb-2 font-primary tw-text-pink tw-text-xl">
                     Order Summary
                   </p>
@@ -311,18 +316,23 @@ const Cart = ({}) => {
                       {carts.map((item) => (
                         <tr key={item._id}>
                           <td>
-                            <img
-                              src={
-                                item.product?.productImageUrl ||
-                                "placeholder.jpg"
-                              }
-                              alt={item.product?.productName || "Product"}
+                            <div
                               style={{
+                                backgroundImage: `url(${
+                                  item.product?.productImageUrl ||
+                                  "placeholder.jpg"
+                                })`,
+                                backgroundSize: "cover",
+                                backgroundPosition: "center",
                                 width: "50px",
                                 height: "50px",
+                                borderRadius: "5px",
                                 objectFit: "cover",
                               }}
-                            />
+                              aria-label={
+                                item.product?.productName || "Product"
+                              }
+                            ></div>
                           </td>
                           <td>{item.product?.productName || "N/A"}</td>
                           <td>{item.quantity || 1}</td>
@@ -333,7 +343,7 @@ const Cart = ({}) => {
                   </table>
 
                   {/* Cart Summary Table */}
-                  <table className="table table-bordered table-responsive font-secondary">
+                  <table className="table table-responsive font-secondary">
                     <tbody>
                       <tr>
                         <th>Subtotal:</th>

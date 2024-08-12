@@ -4,6 +4,7 @@ import { Link } from "react-router-dom";
 import { toast } from "react-toastify";
 import { getUserProfileApi } from "../../apis/Apis";
 import "../../styles/tailwind.css";
+import { FaUser, FaEnvelope, FaPhone } from "react-icons/fa";
 
 const UserProfile = () => {
   const user = JSON.parse(localStorage.getItem("user"));
@@ -92,19 +93,20 @@ const UserProfile = () => {
               className="tw-flex tw-justify-center tw-items-center tw-mb-4 md:tw-mb-0"
             >
               {userData.profileImage ? (
-                <img
-                  src={userData.profileImage}
-                  alt="Profile Image"
+                <div
                   className="tw-rounded-full"
                   style={{
-                    objectFit: "cover",
+                    backgroundImage: `url(${userData.profileImage})`,
+                    backgroundSize: "cover",
+                    backgroundPosition: "center",
                     width: "200px",
                     height: "200px",
                   }}
+                  alt="Profile Image"
                 />
               ) : (
                 <div
-                  className="tw-rounded-full tw-font-secondary tw-font-bold tw-bg-pink-700 tw-text-white tw-flex tw-items-center tw-justify-center"
+                  className="tw-rounded-full tw-font-secondary tw-font-bold tw-bg-black tw-text-white tw-flex tw-items-center tw-justify-center"
                   style={{ width: "200px", height: "200px", fontSize: "100px" }}
                 >
                   {userData.fullName
@@ -114,7 +116,7 @@ const UserProfile = () => {
               )}
             </div>
 
-            <div id="profile-details">
+            <div id="profile-details font-secondary">
               <div className="tw-mb-4">
                 <p className="tw-text-blue tw-font-secondary">Full name</p>
                 <div className="tw-flex tw-items-center">
@@ -141,12 +143,7 @@ const UserProfile = () => {
                       padding: "5px",
                     }}
                   >
-                    <img
-                      src="/assets/svg/user.svg"
-                      style={{
-                        height: "20px",
-                      }}
-                    />
+                    <FaUser size={20} />
                   </div>
                 </div>
               </div>
@@ -176,12 +173,7 @@ const UserProfile = () => {
                       padding: "5px",
                     }}
                   >
-                    <img
-                      src="/assets/svg/mail.svg"
-                      style={{
-                        height: "20px",
-                      }}
-                    />
+                    <FaEnvelope size={20} />
                   </div>
                 </div>
               </div>
@@ -211,12 +203,7 @@ const UserProfile = () => {
                       padding: "5px",
                     }}
                   >
-                    <img
-                      src="/assets/svg/phone-blue.svg"
-                      style={{
-                        height: "20px",
-                      }}
-                    />
+                    <FaPhone size={20} />
                   </div>
                 </div>
               </div>
@@ -227,7 +214,7 @@ const UserProfile = () => {
             className="tw-flex tw-justify-center tw-mt-6"
             to={`/user/editProfile/${userData.id}`}
           >
-            <button className="btn btn-blue font-primary">Edit Profile</button>
+            <button className="btn btn-black font-primary">Edit Profile</button>
           </Link>
         </div>
       ) : (

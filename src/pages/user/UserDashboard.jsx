@@ -155,11 +155,17 @@ const UserDashboard = () => {
                       key={product._id}
                       className="tw-bg-white tw-p-4 tw-shadow-lg tw-rounded-lg tw-flex tw-flex-col tw-h-full"
                     >
-                      <img
-                        src={product.productImageUrl || "placeholder.jpg"}
-                        alt={product.productName || "Product Image"}
-                        className="tw-w-full tw-h-40 tw-object-cover tw-rounded-md"
-                      />
+                      <div
+                        className="tw-w-full tw-h-40 tw-rounded-md"
+                        style={{
+                          backgroundImage: `url(${
+                            product.productImageUrl || "placeholder.jpg"
+                          })`,
+                          backgroundSize: "cover",
+                          backgroundPosition: "center",
+                        }}
+                        aria-label={product.productName || "Product Image"}
+                      ></div>
                       <h3 className="tw-text-lg tw-mt-4 tw-mb-2 font-primary">
                         {product.productName}
                       </h3>

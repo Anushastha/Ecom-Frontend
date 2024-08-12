@@ -39,7 +39,7 @@ const OrdersPage = ({ userId }) => {
           className="container mt-5 bg-white tw-rounded-2xl"
           style={{
             height: "max-content",
-            padding: "30px 40px",
+            padding: "30px 20px",
             marginBottom: "100px",
             maxWidth: "90%",
             minHeight: "400px",
