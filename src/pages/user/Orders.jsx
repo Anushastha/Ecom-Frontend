@@ -1,6 +1,7 @@
 import React, { useEffect, useState } from "react";
 import { toast } from "react-toastify";
 import { getOrdersByUserIdApi } from "../../apis/Apis";
+import { FaClock } from "react-icons/fa";
 
 const OrdersPage = ({ userId }) => {
   const [orders, setOrders] = useState([]);
@@ -9,13 +10,12 @@ const OrdersPage = ({ userId }) => {
   useEffect(() => {
     const fetchOrders = async () => {
       try {
-        getOrdersByUserIdApi(user._id).then((response) => {
-          if (response.data.success) {
-            setOrders(response.data.orders);
-          } else {
-            toast.error("Failed to fetch orders");
-          }
-        });
+        const response = await getOrdersByUserIdApi(user._id);
+        if (response.data.success) {
+          setOrders(response.data.orders);
+        } else {
+          toast.error("Failed to fetch orders");
+        }
       } catch (error) {
         console.error("Error fetching orders:", error);
         toast.error("Error fetching orders");
@@ -25,6 +25,13 @@ const OrdersPage = ({ userId }) => {
     fetchOrders();
   }, [userId]);
 
+  const calculateTotalCost = (items) => {
+    return items.reduce(
+      (total, item) => total + item.productId.productPrice * item.quantity,
+      0
+    );
+  };
+
   return (
     <div className="row">
       <div className="col-12">
@@ -32,7 +39,7 @@ const OrdersPage = ({ userId }) => {
           className="container mt-5 bg-white tw-rounded-2xl"
           style={{
             height: "max-content",
-            padding: "30px 40px 30px 40px",
+            padding: "30px 40px",
             marginBottom: "100px",
             maxWidth: "90%",
             minHeight: "400px",
@@ -48,39 +55,98 @@ const OrdersPage = ({ userId }) => {
               My Orders
             </p>
             <table className="table table-bordered table-responsive">
-              <thead>
+              <thead
+                className="font-primary"
+                style={{ backgroundColor: "#f8f9fa", color: "#343a40" }}
+              >
                 <tr>
                   <th>Order ID</th>
+                  <th>Product Image</th>
                   <th>Product Details</th>
-                  <th>Quantity</th>
-                  <th>Status</th>
+                  <th style={{ textAlign: "center" }}>Quantity</th>
+                  <th style={{ textAlign: "center" }}>Total Cost</th>
+                  <th style={{ textAlign: "center" }}>Status</th>
                 </tr>
               </thead>
-              <tbody>
-                {orders.map((order) =>
-                  order.items.map((item, index) => (
-                    <tr key={item._id}>
-                      {index === 0 && (
-                        <td rowSpan={order?.items.length}>{order?.orderId}</td>
-                      )}
-                      <td>
-                        Product Name: {item?.productId?.productName}
-                        <br />
-                        Price: Rs.{item?.productId?.productPrice}
-                        <br />
-                        Description: {item?.productId?.productDescription}
-                        <br />
-                        Category:{" "}
-                        {item?.productId?.productCategory?.categoryName}
-                        <br />
-                      </td>
-                      <td>{item.quantity}</td>
-                      {index === 0 && (
-                        <td rowSpan={order?.items.length}>{order?.status}</td>
-                      )}
-                    </tr>
-                  ))
-                )}
+              <tbody className="font-secondary">
+                {orders.map((order) => {
+                  const totalCost = calculateTotalCost(order.items);
+                  return (
+                    <React.Fragment key={order._id}>
+                      {order.items.map((item, index) => (
+                        <tr
+                          key={item._id}
+                          style={{
+                            backgroundColor:
+                              index % 2 === 0 ? "#ffffff" : "#f2f2f2",
+                          }}
+                        >
+                          {index === 0 && (
+                            <td
+                              rowSpan={order.items.length}
+                              style={{ verticalAlign: "middle" }}
+                            >
+                              {order?.orderId}
+                            </td>
+                          )}
+                          <td>
+                            <div
+                              style={{
+                                width: "100px",
+                                height: "80px",
+                                backgroundImage: `url(${item.productId?.productImageUrl})`,
+                                backgroundSize: "cover",
+                                backgroundPosition: "center",
+                                borderRadius: "4px",
+                                border: "1px solid #dee2e6",
+                                boxShadow: "0 2px 4px rgba(0,0,0,0.1)",
+                              }}
+                              title={item.productId?.productName}
+                            ></div>
+                          </td>
+                          <td>
+                            <div>
+                              <strong>Product Name:</strong>{" "}
+                              {item?.productId?.productName}
+                              <br />
+                              <strong>Description:</strong>{" "}
+                              {item?.productId?.productDescription}
+                            </div>
+                          </td>
+                          <td style={{ textAlign: "center" }}>
+                            {item.quantity}
+                          </td>
+                          <td
+                            rowSpan={order.items.length}
+                            style={{
+                              textAlign: "center",
+                              verticalAlign: "middle",
+                            }}
+                          >
+                            {index === 0 && `Rs.${totalCost}`}
+                          </td>
+                          {index === 0 && (
+                            <td
+                              rowSpan={order.items.length}
+                              style={{
+                                verticalAlign: "middle",
+                                textAlign: "center",
+                              }}
+                            >
+                              <span
+                                className="badge rounded-pill bg-warning text-white"
+                                style={{ display: "flex", gap: "5px" }}
+                              >
+                                <FaClock />
+                                {order?.status}
+                              </span>
+                            </td>
+                          )}
+                        </tr>
+                      ))}
+                    </React.Fragment>
+                  );
+                })}
               </tbody>
             </table>
           </div>

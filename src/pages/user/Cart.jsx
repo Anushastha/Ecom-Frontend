@@ -299,7 +299,7 @@ const Cart = ({}) => {
 
                   {/* Cart Items Table */}
                   <table className="table table-bordered table-responsive mb-2 font-secondary text-center">
-                    <thead>
+                    <thead className="font-primary">
                       <tr>
                         <th>Image</th>
                         <th>Name</th>
