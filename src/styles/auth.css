@@ -14,4 +14,12 @@
     color: #242626;
   }
   
+  .error-input {
+    border: 1px solid red;
+  }
   
+  .error-text {
+    color: red;
+    font-size: 12px;
+    margin-top: 5px;
+  }

@@ -244,3 +244,44 @@ export const Paragraph = styled.p`
   letter-spacing: 0.5px;
   margin: 20px 0 30px;
 `;
+
+
+export const ErrorText = styled.p`
+  margin-top: 0px;
+  color: #f44336;
+  font-size: 12px;
+  font-family: "Lato", sans-serif;
+  text-align: left;
+`;
+
+// Password Strength Meter Styles
+export const PasswordStrengthMeter = styled.div`
+  margin-bottom: 20px;
+  width: 90%;
+  height: 5px;
+  border-radius: 5px;
+  background-color: lightgrey;
+  position: relative;
+`;
+
+export const PasswordStrengthBar = styled.div`
+  height: 100%;
+  border-radius: 5px;
+  transition: width 0.3s ease-in-out;
+  ${props => props.strength === 'strong' ? `
+    width: 100%;
+    background-color: #4caf50;
+  ` : props.strength === 'moderate' ? `
+    width: 60%;
+    background-color: #ffeb3b;
+  ` : `
+    width: 30%;
+    background-color: #f44336;
+  `}
+`;
+
+export const PasswordStrengthText = styled.span`
+  display: block;
+  color: ${props => props.strength === 'strong' ? '#4caf50' : props.strength === 'moderate' ? '#ffeb3b' : '#f44336'};
+  font-size: 12px;
+`;

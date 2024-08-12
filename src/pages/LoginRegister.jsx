@@ -30,6 +30,16 @@ function LoginRegister() {
   const [passwordVisible, setPasswordVisible] = useState(false);
   const [confirmPasswordVisible, setConfirmPasswordVisible] = useState(false);
 
+  const [passwordStrength, setPasswordStrength] = useState("");
+  const [passwordStrengthClass, setPasswordStrengthClass] = useState("");
+
+  const [errors, setErrors] = useState({
+    email: "",
+    phoneNumber: "",
+    password: "",
+    confirmPassword: "",
+  });
+
   const navigate = useNavigate();
 
   useEffect(() => {
@@ -42,31 +52,93 @@ function LoginRegister() {
 
   const changeFullName = (e) => setFullName(e.target.value);
   const changeEmail = (e) => setEmail(e.target.value);
-  const changePassword = (e) => setPassword(e.target.value);
+
+  const changePassword = (e) => {
+    const newPassword = e.target.value;
+    setPassword(newPassword);
+    evaluatePasswordStrength(newPassword);
+  };
+
   const changeConfirmPassword = (e) => setConfirmPassword(e.target.value);
   const changePhoneNumber = (e) => setPhoneNumber(e.target.value);
 
   const isValidEmail = (email) => /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email);
   const isValidPhoneNumber = (number) => /^\d{10}$/.test(number);
-  const isValidPassword = (password) => password.length >= 8;
+  const isValidPassword = (password) =>
+    password.length >= 8 && password.length <= 12;
+
+  const evaluatePasswordStrength = (password) => {
+    const lengthCriteria = password.length >= 8 && password.length <= 12;
+    const numberCriteria = /\d/.test(password);
+    const specialCharCriteria = /[!@#$%^&*(),.?":{}|<>]/.test(password);
+
+    if (lengthCriteria && numberCriteria && specialCharCriteria) {
+      setPasswordStrength("Strong");
+      setPasswordStrengthClass("strong");
+    } else if (lengthCriteria && (numberCriteria || specialCharCriteria)) {
+      setPasswordStrength("Moderate");
+      setPasswordStrengthClass("moderate");
+    } else {
+      setPasswordStrength("Weak");
+      setPasswordStrengthClass("weak");
+    }
+  };
 
   const handleRegisterSubmit = (e) => {
     e.preventDefault();
-    if (!isValidEmail(email)) {
-      toast.error("Invalid email format.");
-      return;
+    // Initialize an array to store error messages
+    const errorMessages = [];
+
+    // Check if all fields are empty
+    if (
+      !fullName.trim() &&
+      !email.trim() &&
+      !phoneNumber.trim() &&
+      !password.trim() &&
+      !confirmPassword.trim()
+    ) {
+      errorMessages.push("Please enter all fields.");
+    } else {
+      // Check if each field is filled and add the corresponding error message to the array
+      if (!fullName.trim()) {
+        errorMessages.push("Please enter your full name.");
+      }
+      if (!email.trim()) {
+        errorMessages.push("Please enter your email.");
+      }
+      if (!phoneNumber.trim()) {
+        errorMessages.push("Please enter your phone number.");
+      }
+      if (!password.trim()) {
+        errorMessages.push("Please enter your password.");
+      }
+      if (!confirmPassword.trim()) {
+        errorMessages.push("Please confirm your password.");
+      }
+
+      // Validate each field and add corresponding error messages to the array
+      if (email.trim() && !isValidEmail(email)) {
+        errorMessages.push("Invalid email format.");
+      }
+      if (phoneNumber.trim() && !isValidPhoneNumber(phoneNumber)) {
+        errorMessages.push("Phone number must be 10 digits.");
+      }
+      if (password.trim() && !isValidPassword(password)) {
+        errorMessages.push(
+          "Password must be between 8 and 12 characters long."
+        );
+      }
+      if (password && confirmPassword && password !== confirmPassword) {
+        errorMessages.push("Passwords do not match.");
+      }
     }
-    if (!isValidPhoneNumber(phoneNumber)) {
-      toast.error("Phone number must be 10 digits.");
-      return;
-    }
-    if (!isValidPassword(password)) {
-      toast.error("Password must be at least 8 characters long.");
-      return;
-    }
-    if (password !== confirmPassword) {
-      toast.error("Passwords do not match.");
-      return;
+
+    // If there are any errors, display all the error messages using toast.error()
+    if (errorMessages.length > 0) {
+      errorMessages.forEach((message) => {
+        toast.error(message);
+      });
+      return; // Prevent form submission
     }
 
     const data = {
@@ -184,6 +256,21 @@ function LoginRegister() {
                 )}
               </Components.IconWrapper>
             </Components.InputContainer>
+
+            {password && (
+              <Components.PasswordStrengthMeter>
+                <Components.PasswordStrengthBar
+                  strength={passwordStrengthClass}
+                />
+                <Components.PasswordStrengthText
+                  className="font-secondary"
+                  style={{ textAlign: "left" }}
+                  strength={passwordStrengthClass}
+                >
+                  Password Strength: {passwordStrength}
+                </Components.PasswordStrengthText>
+              </Components.PasswordStrengthMeter>
+            )}
 
             <Components.InputContainer>
               <Components.Input
