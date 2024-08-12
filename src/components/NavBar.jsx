@@ -88,7 +88,15 @@ const NavBar = () => {
                     className="nav-link mx-lg-2 font-primary"
                     to="/user/orders"
                   >
-                    Orders
+                    Order History
+                  </NavLink>
+                </li>
+                <li className="nav-item">
+                  <NavLink
+                    className="nav-link mx-lg-2 font-primary"
+                    to="/user/cart"
+                  >
+                    Cart
                   </NavLink>
                 </li>
                 <li className="nav-item">

@@ -34,8 +34,8 @@ const ProductDetails = () => {
         setProduct(fetchedProduct);
         fetchProductCategory(fetchedProduct.productCategory);
 
-        // Initial fetch of saved and cart items
-        await fetchSavedAndCartItems();
+        // // Initial fetch of saved and cart items
+        // await fetchSavedAndCartItems();
       } catch (error) {
         console.error("Error fetching data:", error);
       }

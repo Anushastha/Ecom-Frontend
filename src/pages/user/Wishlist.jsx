@@ -51,9 +51,9 @@ const Wishlist = () => {
             minHeight: "400px",
           }}
         >
-          <div className="container tw-px-20">
+          <div className="container">
             <p
-              className="mb-3 font-primary text-blue"
+              className="mb-3 font-primary"
               style={{
                 fontSize: "30px",
               }}

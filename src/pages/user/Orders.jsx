@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from "react";
 import { toast } from "react-toastify";
-import { getOrdersByuserId } from "../../apis/Apis";
+import { getOrdersByUserIdApi } from "../../apis/Apis";
 
 const OrdersPage = ({ userId }) => {
   const [orders, setOrders] = useState([]);
@@ -9,7 +9,7 @@ const OrdersPage = ({ userId }) => {
   useEffect(() => {
     const fetchOrders = async () => {
       try {
-        getOrdersByuserId(user._id).then((response) => {
+        getOrdersByUserIdApi(user._id).then((response) => {
           if (response.data.success) {
             setOrders(response.data.orders);
           } else {
@@ -26,43 +26,66 @@ const OrdersPage = ({ userId }) => {
   }, [userId]);
 
   return (
-    <div>
-      <h2>My Orders</h2>
-      <table className="table">
-        <thead>
-          <tr>
-            <th>Order ID</th>
-            <th>Product Details</th>
-            <th>Quantity</th>
-            <th>Status</th>
-          </tr>
-        </thead>
-        <tbody>
-          {orders.map((order) =>
-            order.items.map((item, index) => (
-              <tr key={item._id}>
-                {index === 0 && (
-                  <td rowSpan={order?.items.length}>{order?.orderId}</td>
+    <div className="row">
+      <div className="col-12">
+        <div
+          className="container mt-5 bg-white tw-rounded-2xl"
+          style={{
+            height: "max-content",
+            padding: "30px 40px 30px 40px",
+            marginBottom: "100px",
+            maxWidth: "90%",
+            minHeight: "400px",
+          }}
+        >
+          <div className="container">
+            <p
+              className="mb-3 font-primary"
+              style={{
+                fontSize: "30px",
+              }}
+            >
+              My Orders
+            </p>
+            <table className="table table-bordered table-responsive">
+              <thead>
+                <tr>
+                  <th>Order ID</th>
+                  <th>Product Details</th>
+                  <th>Quantity</th>
+                  <th>Status</th>
+                </tr>
+              </thead>
+              <tbody>
+                {orders.map((order) =>
+                  order.items.map((item, index) => (
+                    <tr key={item._id}>
+                      {index === 0 && (
+                        <td rowSpan={order?.items.length}>{order?.orderId}</td>
+                      )}
+                      <td>
+                        Product Name: {item?.productId?.productName}
+                        <br />
+                        Price: Rs.{item?.productId?.productPrice}
+                        <br />
+                        Description: {item?.productId?.productDescription}
+                        <br />
+                        Category:{" "}
+                        {item?.productId?.productCategory?.categoryName}
+                        <br />
+                      </td>
+                      <td>{item.quantity}</td>
+                      {index === 0 && (
+                        <td rowSpan={order?.items.length}>{order?.status}</td>
+                      )}
+                    </tr>
+                  ))
                 )}
-                <td>
-                  {item?.productId?.productName}
-                  <br />
-                  Price: ${item?.productId?.productPrice}
-                  <br />
-                  Description: {item?.productId?.productDescription}
-                  <br />
-                  Category: {item?.productId?.category?.name}
-                  <br />
-                </td>
-                <td>{item.quantity}</td>
-                {index === 0 && (
-                  <td rowSpan={order?.items.length}>{order?.status}</td>
-                )}
-              </tr>
-            ))
-          )}
-        </tbody>
-      </table>
+              </tbody>
+            </table>
+          </div>
+        </div>
+      </div>
     </div>
   );
 };

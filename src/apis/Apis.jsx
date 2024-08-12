@@ -85,11 +85,14 @@ export const createCartApi = (data) => Api.post("/api/cart/create_cart", data);
 export const getCartApi = (id) => Api.get(`/api/cart/get_cart/${id}`);
 export const deleteCartApi = (id) =>
   Api.delete(`/api/cart/remove_cart/${id}`, config);
+export const updateCartItemQuantityApi = (itemId, data) =>
+  Api.put(`/api/cart/update_cart/${itemId}`, data);
+export const clearCartApi = (data) => Api.post("/api/cart/clear", data, config);
 
-//Order APIs
-export const orderCategory = (data) => Api.post(`/api/order/create`, data);
-export const getOrders = () => Api.get(`/api/order/getOrders`, config);
-export const getOrdersByuserId = (userId) =>
-  Api.get(`/api/order/getOrdersByUser/${userId}`);
-export const updateOrdersApi = (orderId, formData) =>
-  Api.put(`/api/order/update_order/${orderId}/status`, formData, config);
+// Order APIs
+export const createOrderApi = (orderData) =>
+  Api.post("/api/orders/create", orderData, config);
+export const updateOrderStatusApi = (orderId, status) =>
+  Api.put(`/api/orders/update_order/${orderId}/status`, { status }, config);
+export const getOrdersByUserIdApi = (userId) =>
+  Api.get(`/api/orders/getOrdersByUser/${userId}`, config);
