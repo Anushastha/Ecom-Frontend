@@ -25,7 +25,7 @@ const ChangePassword = () => {
   });
 
   const evaluatePasswordStrength = (password) => {
-    const lengthCriteria = password.length >= 8 && password.length <= 12;
+    const lengthCriteria = password.length >= 8;
     const numberCriteria = /\d/.test(password);
     const specialCharCriteria = /[!@#$%^&*(),.?":{}|<>]/.test(password);
 

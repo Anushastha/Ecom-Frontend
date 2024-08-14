@@ -103,17 +103,38 @@ function App() {
                     <Route path="user/changePassword" element={<PrivateRoute><ChangePassword /> </PrivateRoute>} />
                     <Route path="user/editProfile/:id" element={<PrivateRoute><EditProfile /> </PrivateRoute>} />
                     <Route path="user/userProfile" element={<PrivateRoute><UserProfile /> </PrivateRoute>} />
+                    
 
                     {/* Admin routes */}
                     <Route path="admin/dashboard" element={<PrivateRoute isAdmin={true}><AdminDashboard /></PrivateRoute>} />
                     <Route path="admin/products" element={<PrivateRoute isAdmin={true}><AdminProducts /></PrivateRoute>} />
                     <Route path="admin/products/editProduct/:id" element={<PrivateRoute isAdmin={true}><AdminEditProduct /></PrivateRoute>} />
-
                     <Route path="admin/category" element={<PrivateRoute isAdmin={true}><AdminCategory /></PrivateRoute>} />
                     <Route path="admin/category/products/:id" element={<PrivateRoute isAdmin={true}><AdminCategoryProduct /></PrivateRoute>} />
+                   
 
+                  
+                    
+                   
+                     {/* <Route element={<UserRoutes />}>
+                        <Route path="user/wishlist" element={<Wishlist />} />
+                        <Route path="user/orders" element={<OrdersPage />} />
+                        <Route path="user/cart" element={<Cart />} />
+                        <Route path="user/changePassword" element={<ChangePassword />} />
+                        <Route path="user/editProfile/:id" element={<EditProfile />} />
+                        <Route path="user/userProfile" element={<UserProfile />} />
+                    </Route> */}
+
+                      {/* <Route element={<AdminRoutes />}>
+                        <Route path="admin/dashboard" element={<AdminDashboard />} />
+                        <Route path="admin/products" element={<AdminProducts />} />
+                        <Route path="admin/products/editProduct/:id" element={<AdminEditProduct />} />
+                        <Route path="admin/category" element={<AdminCategory />} />
+                        <Route path="admin/category/products/:id" element={<AdminCategoryProduct />} />
+                    </Route> */}
 
                 </Route>
+
             </Routes>
         </Router>
     );

@@ -7,6 +7,7 @@ import {
 } from "../../apis/Apis";
 import { toast } from "react-toastify";
 import { Link } from "react-router-dom";
+import { useNavigate } from "react-router-dom";
 
 const AdminProducts = () => {
   const [productName, setProductName] = useState("");
@@ -17,6 +18,7 @@ const AdminProducts = () => {
   const [previewImage, setPreviewImage] = useState(null);
   const [products, setProducts] = useState([]);
   const [categories, setCategories] = useState([]);
+  const navigate = useNavigate();
 
   useEffect(() => {
     getAllProductsApi().then((res) => {
@@ -62,6 +64,7 @@ const AdminProducts = () => {
         if (!res.data.success) {
           toast.error(res.data.message);
           window.location.reload();
+          navigate("/admin/products");
         } else {
           toast.success(res.data.message);
           setProducts([...products, res.data.product]);

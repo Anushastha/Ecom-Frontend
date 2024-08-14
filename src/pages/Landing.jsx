@@ -1,9 +1,46 @@
-import React from "react";
+import React, { useEffect, useState } from "react";
 import "../styles/landing.css";
 import "../scss/customs.scss";
 import { Link } from "react-router-dom";
+import { getAllProductsApi } from "../apis/Apis";
 
 const LandingPage = () => {
+  const [products, setProducts] = useState([]);
+
+  useEffect(() => {
+    const fetchProducts = async () => {
+      try {
+        const response = await getAllProductsApi();
+        if (response.data.success) {
+          const allProducts = response.data.products;
+
+          // Function to shuffle the array
+          const shuffleArray = (array) => {
+            let shuffledArray = array.slice();
+            for (let i = shuffledArray.length - 1; i > 0; i--) {
+              const j = Math.floor(Math.random() * (i + 1));
+              [shuffledArray[i], shuffledArray[j]] = [
+                shuffledArray[j],
+                shuffledArray[i],
+              ];
+            }
+            return shuffledArray;
+          };
+
+          // Shuffle the products and take the first 4
+          const shuffledProducts = shuffleArray(allProducts);
+          setProducts(shuffledProducts.slice(0, 4));
+        } else {
+          console.error("Failed to fetch products");
+        }
+      } catch (error) {
+        console.error("Error fetching products:", error);
+      }
+    };
+
+    fetchProducts();
+  }, []);
+
   return (
     <div className="landing-page">
       <section className="hero">
@@ -34,43 +71,35 @@ const LandingPage = () => {
       <section className="featured-products">
         <div className="container">
           <h2 className="section-title">Featured Products</h2>
+
           <div className="product-grid">
-            <div className="product-card">
-              <div
-                className="product-image"
-                style={{
-                  backgroundImage: `url("/assets/images/productimage.jpg")`,
-                  backgroundSize: "cover",
-                  backgroundPosition: "center",
-                  width: "100%",
-                  height: "200px",
-                }}
-                aria-label="Product 1"
-              ></div>
-              <h3 className="product-title">Hydrating Serum</h3>
-              <p className="product-price">$29.99</p>
-              <Link to="/product/1" className="btn-outline font-primary">
-                View Details
-              </Link>
-            </div>
-            <div className="product-card">
-              <div
-                className="product-image"
-                style={{
-                  backgroundImage: `url("/assets/images/productimage.jpg")`,
-                  backgroundSize: "cover",
-                  backgroundPosition: "center",
-                  width: "100%",
-                  height: "200px",
-                }}
-                aria-label="Product 2"
-              ></div>
-              <h3 className="product-title font-secondary">Brightening Mask</h3>
-              <p className="product-price font-secondary">$19.99</p>
-              <Link to="/product/2" className="btn-outline font-primary">
-                View Details
-              </Link>
-            </div>
+            {products.map((product) => (
+              <div key={product._id} className="product-card">
+                <div
+                  className="product-image"
+                  style={{
+                    backgroundImage: `url(${product.productImageUrl})`,
+                    backgroundSize: "cover",
+                    backgroundPosition: "center",
+                    width: "100%",
+                    height: "200px",
+                  }}
+                  aria-label={product.productName}
+                ></div>
+                <h3 className="product-title font-primary">
+                  {product.productName}
+                </h3>
+                <p className="product-price font-secondary tw-font-bold">
+                  RS. {product.productPrice}
+                </p>
+                <Link
+                  to={`/user/dashboard/productDetails/${product.id}`}
+                  className="btn-outline font-primary"
+                >
+                  View Details
+                </Link>
+              </div>
+            ))}
           </div>
         </div>
       </section>

@@ -24,7 +24,7 @@ const Cart = ({}) => {
         const userId = parsedUserData._id;
 
         const cartRes = await getCartApi(userId);
-        const cartItems = cartRes.data.cart;
+        const cartItems = cartRes.data.cart || [];
         setCart(cartItems);
         calculateSubtotal(cartItems);
 

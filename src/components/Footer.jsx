@@ -16,18 +16,22 @@ const Footer = () => {
         }}
       >
         <div>
-          <img
+          <div
             className="footer-image-container"
-            src="/assets/images/footerImage.png"
-            alt="img"
             style={{
+              backgroundImage: `url('/assets/images/footerImage.png')`,
+              backgroundSize: "contain",
+              backgroundRepeat: "no-repeat",
+              backgroundPosition: "right",
               height: "280px",
               zIndex: "1",
               position: "absolute",
               bottom: "25px",
               right: "20px",
+              width: "100%",
             }}
-          />
+            alt="footer image"
+          ></div>
         </div>
         <div
           style={{
@@ -50,17 +54,22 @@ const Footer = () => {
               width: "80%",
             }}
           >
-            <img
-              src="/assets/images/logo.png"
-              alt="logo"
+            <div
               className="footer-logo"
               style={{
+                backgroundImage: `url('/assets/images/logo.png')`,
+                backgroundSize: "contain",
+                backgroundRepeat: "no-repeat",
+                backgroundPosition: "center",
                 height: "18vh",
+                width: "100%",
                 display: "flex",
                 alignItems: "center",
                 justifyContent: "center",
               }}
-            />
+              alt="logo"
+            ></div>
+
             <div
               className="container"
               style={{
@@ -150,13 +159,7 @@ const Footer = () => {
                   <Link to={"/"}>Home</Link>
                 </li>
                 <li>
-                  <Link to={"/user/colleges"}>Colleges</Link>
-                </li>
-                <li>
-                  <Link to={"/user/courses"}>Courses</Link>
-                </li>
-                <li>
-                  <Link to={"/user/blogs"}>Blogs</Link>
+                  <Link to={"/user/dashboard"}>Products</Link>
                 </li>
               </ul>
             </div>

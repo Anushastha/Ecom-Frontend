@@ -66,7 +66,7 @@ const ForgotPasswordCode = () => {
             </p>
             <div className="tw-flex tw-items-center">
               <div className="tw-mb-4 tw-mt-4">
-                <b className="tw-text-blue tw-font-secondary">Enter code</b>
+                <b className="tw-font-secondary">Enter code</b>
                 <div className="tw-flex tw-items-center">
                   <input
                     className="tw-border-none tw-p-2 focus:tw-outline-none"
@@ -74,7 +74,6 @@ const ForgotPasswordCode = () => {
                     onChange={handleChangeCode}
                     style={{
                       backgroundColor: "#F3F4F4",
-                      color: "#A8AAAA",
                       border: "none",
                       marginRight: "2px",
                       padding: "3px 10px",

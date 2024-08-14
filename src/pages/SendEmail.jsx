@@ -54,7 +54,7 @@ const SendEmail = () => {
             <p>Enter your email address to get a reset code</p>
             <div className="tw-flex tw-items-center tw-mt-4">
               <div className="tw-mb-4">
-                <b className="tw-text-blue tw-font-secondary tw-mt-5">
+                <b className="tw-font-bold tw-font-secondary tw-mt-5">
                   Enter email address
                 </b>
                 <div className="tw-flex tw-items-center">
@@ -63,7 +63,6 @@ const SendEmail = () => {
                     onChange={changeEmail}
                     style={{
                       backgroundColor: "#F3F4F4",
-                      color: "#A8AAAA",
                       border: "none",
                       marginRight: "2px",
                       padding: "3px 10px",

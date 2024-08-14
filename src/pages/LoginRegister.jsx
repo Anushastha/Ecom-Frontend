@@ -241,10 +241,8 @@ function LoginRegister() {
 
       toast.success(res.data.message);
       localStorage.setItem("token", res.data.token);
-
       const userData = JSON.stringify(res.data.userData);
       localStorage.setItem("user", userData);
-
       navigate(res.data.isAdmin ? "/admin/dashboard" : "/user/dashboard");
     } catch (err) {
       console.error(err);

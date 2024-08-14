@@ -112,7 +112,6 @@ const ResetPassword = () => {
                   maxLength={12}
                   style={{
                     backgroundColor: "#F3F4F4",
-                    color: "#A8AAAA",
                     border: "none",
                     marginRight: "2px",
                     padding: "3px 10px",
@@ -164,7 +163,6 @@ const ResetPassword = () => {
                   placeholder="Confirm password"
                   style={{
                     backgroundColor: "#F3F4F4",
-                    color: "#A8AAAA",
                     border: "none",
                     marginRight: "2px",
                     padding: "3px 10px",

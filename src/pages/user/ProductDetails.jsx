@@ -30,9 +30,8 @@ const ProductDetails = () => {
         const fetchedProduct = productRes.data.product;
         setProduct(fetchedProduct);
         fetchProductCategory(fetchedProduct.productCategory);
-
-        // // Initial fetch of saved and cart items
-        // await fetchSavedAndCartItems();
+        await fetchSavedItems();
+        await fetchCartItems();
       } catch (error) {
         console.error("Error fetching data:", error);
       }
@@ -50,11 +49,10 @@ const ProductDetails = () => {
     }
   };
 
-  const fetchSavedAndCartItems = async () => {
+  const fetchSavedItems = async () => {
     try {
       const user = JSON.parse(localStorage.getItem("user"));
       if (user && user._id) {
-        // Fetch saved items
         const savedRes = await getSavedApi(user._id);
         const savedProducts = savedRes.data.save;
         const savedItem = savedProducts.find((item) => item.product._id === id);
@@ -65,8 +63,16 @@ const ProductDetails = () => {
           setIsFavorite(false);
           setSavedItemId(null);
         }
+      }
+    } catch (error) {
+      console.error("Error fetching saved items:", error);
+    }
+  };
 
-        // Fetch cart items
+  const fetchCartItems = async () => {
+    try {
+      const user = JSON.parse(localStorage.getItem("user"));
+      if (user && user._id) {
         const cartRes = await getCartApi(user._id);
         const cartItems = cartRes.data.cart;
         const cartItem = cartItems.find((item) => item.product._id === id);
@@ -79,7 +85,7 @@ const ProductDetails = () => {
         }
       }
     } catch (error) {
-      console.error("Error fetching saved and cart items:", error);
+      console.error("Error fetching cart items:", error);
     }
   };
 
@@ -122,7 +128,7 @@ const ProductDetails = () => {
       }
 
       // Re-fetch saved items to ensure state consistency
-      await fetchSavedAndCartItems();
+      await fetchSavedItems();
     } catch (error) {
       console.error("Error saving or removing product:", error);
       toast.error("Failed to save or remove product");
@@ -166,7 +172,7 @@ const ProductDetails = () => {
       }
 
       // Re-fetch cart items to ensure state consistency
-      await fetchSavedAndCartItems();
+      await fetchCartItems();
     } catch (error) {
       console.error("Error adding or removing from cart:", error);
       toast.error("Failed to add or remove product from cart");
@@ -185,8 +191,7 @@ const ProductDetails = () => {
                 backgroundSize: "contain",
                 backgroundRepeat: "no-repeat",
                 backgroundPosition: "center",
-                maxWidth: "100%",
-                height: "90%",
+                height: "200px",
               }}
               aria-label={product.productName}
             />
@@ -231,7 +236,7 @@ const ProductDetails = () => {
               </button>
             </div>
           </div>
-          <p className="font-secondary">{product.productDescription}</p>
+          <p className="font-secondary mt-4">{product.productDescription}</p>
         </div>
       )}
     </div>
