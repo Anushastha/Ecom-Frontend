@@ -6,7 +6,7 @@ import { toast } from "react-toastify";
 import { FaEye, FaEyeSlash } from "react-icons/fa";
 import { useNavigate } from "react-router-dom";
 
-const ChangePassword = () => {
+const ExpiredPassChange = () => {
   const [currentPassword, setCurrentPassword] = useState("");
   const [newPassword, setNewPassword] = useState("");
   const [confirmNewPassword, setConfirmNewPassword] = useState("");
@@ -49,7 +49,7 @@ const ChangePassword = () => {
 
     // Check if all fields are filled
     if (!currentPassword.trim()) {
-      errorMessages.push("Current password is required.");
+      errorMessages.push("Old password is required.");
     }
     if (!newPassword.trim()) {
       errorMessages.push("New password is required.");
@@ -87,7 +87,7 @@ const ChangePassword = () => {
         token
       );
       toast.success(response.message);
-      navigate("/user/dashboard");
+      navigate("/auth?mode=login");
     } catch (error) {
       toast.error(error.message || "An error occurred");
     }
@@ -124,7 +124,7 @@ const ChangePassword = () => {
           <div id="password-details">
             <div className="tw-mb-4">
               <p className="tw-text-black tw-font-secondary tw-font-bold">
-                Enter your current password
+                Enter your old password
               </p>
               <div className="tw-flex tw-items-center">
                 <input
@@ -154,9 +154,9 @@ const ChangePassword = () => {
                   onClick={togglePasswordVisibility}
                 >
                   {passwordVisible ? (
-                    <FaEye size={20} />
+                    <FaEye size={23} />
                   ) : (
-                    <FaEyeSlash size={20} />
+                    <FaEyeSlash size={23} />
                   )}
                 </div>
               </div>
@@ -196,9 +196,9 @@ const ChangePassword = () => {
                   onClick={toggleNewPasswordVisibility}
                 >
                   {newPasswordVisible ? (
-                    <FaEye size={20} />
+                    <FaEye size={23} />
                   ) : (
-                    <FaEyeSlash size={20} />
+                    <FaEyeSlash size={23} />
                   )}
                 </div>
               </div>
@@ -247,9 +247,9 @@ const ChangePassword = () => {
                   onClick={toggleConfirmPasswordVisibility}
                 >
                   {confirmPasswordVisible ? (
-                    <FaEye size={20} />
+                    <FaEye size={23} />
                   ) : (
-                    <FaEyeSlash size={20} />
+                    <FaEyeSlash size={23} />
                   )}
                 </div>
               </div>
@@ -266,4 +266,4 @@ const ChangePassword = () => {
   );
 };
 
-export default ChangePassword;
+export default ExpiredPassChange;

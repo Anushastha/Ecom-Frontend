@@ -31,6 +31,7 @@ import OrdersPage from './pages/user/Orders';
 import ChangePassword from './pages/user/ChangePassword';
 import EditProfile from './pages/user/EditProfile';
 import UserProfile from './pages/user/UserProfile';
+import ExpiredPassChange from './pages/user/ExpiredPassChange';
 
 const PrivateRoute = ({ children, isAdmin }) => {
     const token = localStorage.getItem('token');
@@ -56,7 +57,8 @@ function Layout() {
         !location.pathname.startsWith('/user/userProfile') &&
         !location.pathname.startsWith('/sendEmail') &&
         !location.pathname.startsWith('/resetCode') &&
-        !location.pathname.startsWith('/resetPassword');
+        !location.pathname.startsWith('/resetPassword') &&
+        !location.pathname.startsWith('/changeExpiredPassword');
 
     const showFooter = !location.pathname.startsWith('/auth') &&
         !location.pathname.startsWith('/admin') &&
@@ -65,7 +67,8 @@ function Layout() {
         !location.pathname.startsWith('/user/userProfile') &&
         !location.pathname.startsWith('/sendEmail') &&
         !location.pathname.startsWith('/resetCode') &&
-        !location.pathname.startsWith('/resetPassword');
+        !location.pathname.startsWith('/resetPassword') &&
+        !location.pathname.startsWith('/changeExpiredPassword');
 
     return (
         <>
@@ -87,6 +90,7 @@ function App() {
                     <Route path='/sendEmail' element={<SendEmail />} />
                     <Route path='/resetCode' element={<ForgotPasswordCode />} />
                     <Route path='/resetPassword' element={<ResetPassword />} />
+                    <Route path='/changeExpiredPassword' element={<ExpiredPassChange />} />
 
                     {/* User public routes */}
                     <Route path="user/dashboard" element={<UserDashboard />} />

@@ -24,6 +24,7 @@ export const verifyCodeApi = (data) =>
   Api.post("/api/user/reset_code", data, config);
 export const updatePasswordApi = (data) =>
   Api.post("/api/user/update_password", data);
+export const expiredPasswordChangeApi = (data) => Api.post("/api/user/expired_password_change", data);
 
 export const changePassword = async (data, token) => {
   try {

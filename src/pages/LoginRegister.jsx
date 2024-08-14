@@ -32,13 +32,14 @@ function LoginRegister() {
 
   const [passwordStrength, setPasswordStrength] = useState("");
   const [passwordStrengthClass, setPasswordStrengthClass] = useState("");
+  const [timerState, setTimerState] = useState(null);
 
-  const [errors, setErrors] = useState({
-    email: "",
-    phoneNumber: "",
-    password: "",
-    confirmPassword: "",
-  });
+  // const [errors, setErrors] = useState({
+  //   email: "",
+  //   phoneNumber: "",
+  //   password: "",
+  //   confirmPassword: "",
+  // });
 
   const navigate = useNavigate();
 
@@ -164,7 +165,30 @@ function LoginRegister() {
       });
   };
 
-  const handleLoginSubmit = (e) => {
+  const handlePasswordExpiry = () => {
+    if (
+      window.confirm(
+        "Your password has expired. Would you like to change it now?"
+      )
+    ) {
+      navigate("/changeExpiredPassword"); // Redirect to change password page
+    } else {
+      toast.info("You will be redirected to the login page.", {
+        position: "top-right",
+        autoClose: 3000,
+        hideProgressBar: false,
+        closeOnClick: true,
+        pauseOnHover: true,
+        draggable: true,
+      });
+
+      setTimeout(() => {
+        navigate("/auth?mode=login"); // Redirect to login page after the toast message
+      }, 3000); // Wait for the toast to finish before redirecting
+    }
+  };
+
+  const handleLoginSubmit = async (e) => {
     e.preventDefault();
     const errorMessages = [];
 
@@ -186,32 +210,84 @@ function LoginRegister() {
       return emailRegex.test(email);
     }
 
+    // Display validation errors
     if (errorMessages.length > 0) {
-      errorMessages.forEach((message) => {
-        toast.error(message);
-      });
+      errorMessages.forEach((message) => toast.error(message));
       return; // Prevent form submission
     }
+
+    // Prepare data for API request
     const data = { email, password };
 
-    loginApi(data)
-      .then((res) => {
-        if (!res.data.success) {
-          toast.error(res.data.message);
-        } else {
-          toast.success(res.data.message);
-          localStorage.setItem("token", res.data.token);
-          // const isAdmin = res.data.isAdmin;
-          const convertedJson = JSON.stringify(res.data.userData);
-          localStorage.setItem("user", convertedJson);
+    try {
+      const res = await loginApi(data);
 
-          navigate(res.data.isAdmin ? "/admin/dashboard" : "/user/dashboard");
+      if (!res.data.success) {
+        if (res.data.message.includes("locked")) {
+          const lockUntil = new Date(res.data.lockUntil);
+          startLockoutTimer(lockUntil);
+          return;
+        } else {
+          toast.error(res.data.message);
         }
-      })
-      .catch((err) => {
-        console.error(err);
-        toast.error("Server Error!");
-      });
+        return;
+      }
+
+      if (res.data.passwordExpired) {
+        toast.error("Your password has expired. Please change your password.");
+        handlePasswordExpiry();
+        return;
+      }
+
+      toast.success(res.data.message);
+      localStorage.setItem("token", res.data.token);
+
+      const userData = JSON.stringify(res.data.userData);
+      localStorage.setItem("user", userData);
+
+      navigate(res.data.isAdmin ? "/admin/dashboard" : "/user/dashboard");
+    } catch (err) {
+      console.error(err);
+      toast.error("Server Error!");
+    }
+  };
+
+  // Function to start the lockout timer
+  const startLockoutTimer = (lockUntil) => {
+    const currentTime = new Date();
+    const lockTimeLeft = lockUntil - currentTime;
+
+    if (lockTimeLeft > 0) {
+      const timerInterval = setInterval(() => {
+        const timeLeft = new Date(lockUntil - new Date());
+        if (timeLeft > 0) {
+          const minutes = timeLeft.getUTCMinutes();
+          const seconds = timeLeft.getUTCSeconds();
+          setTimerState({ minutes, seconds });
+        } else {
+          clearInterval(timerInterval);
+          setTimerState(null);
+          window.location.reload();
+        }
+      }, 1000);
+    }
+  };
+
+  const styles = {
+    timerContainer: {
+      position: "absolute",
+      top: "20px",
+      left: "50%",
+      transform: "translateX(-50%)",
+      backgroundColor: "rgba(0, 0, 0, 0.7)",
+      padding: "5px 10px",
+      borderRadius: "5px",
+      zIndex: 1000,
+    },
+    timerText: {
+      color: "#fff",
+      fontSize: "16px",
+    },
   };
 
   const toggleSignIn = (value) => setSignIn(value);
@@ -236,6 +312,23 @@ function LoginRegister() {
       >
         <FaArrowLeft size={25} />
       </div>
+
+      {/* Timer display */}
+      {timerState && (
+        <div style={styles.timerContainer}>
+          <p
+            style={styles.timerText}
+            className="font-secondary tw-font-bold tw-text-center p-2"
+          >
+            Your account is locked due to multiple failed login attempts.
+            <br /> Please try again in
+            {`${timerState.minutes}:${timerState.seconds < 10 ? "0" : ""}${
+              timerState.seconds
+            }`}
+          </p>
+        </div>
+      )}
+
       <Components.Container>
         <Components.SignUpContainer signinIn={signIn}>
           <Components.Form onSubmit={handleRegisterSubmit}>
