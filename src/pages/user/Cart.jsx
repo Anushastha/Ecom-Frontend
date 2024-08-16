@@ -10,9 +10,12 @@ import {
   clearCartApi,
 } from "../../apis/Apis";
 import "../../styles/tailwind.css";
+import KhaltiCheckout from "khalti-checkout-web";
+import config from "../../components/Khalti/khaltiConfig";
 
-const Cart = ({}) => {
+const Cart = ({ setCheckoutSuccess }) => {
   const [carts, setCart] = useState([]);
+  let checkout = new KhaltiCheckout(config);
   const [categoryMap, setCategoryMap] = useState({});
   const [subtotal, setSubtotal] = useState(0);
 
@@ -127,7 +130,7 @@ const Cart = ({}) => {
       if (res.data.success) {
         // Clear the cart after placing the order
         await clearCartApi({ userId });
-
+        setCheckoutSuccess(true);
         toast.success("Order placed successfully!");
         setCart([]); // Clear cart state
         setSubtotal(0); // Reset subtotal
@@ -362,7 +365,8 @@ const Cart = ({}) => {
 
                   <div className="text-center mt-4">
                     <button
-                      onClick={handlePlaceOrder}
+                      // onClick={handlePlaceOrder}
+                      onClick={() => checkout.show({ amount: 10000 })}
                       className="btn btn-sm btn-black font-primary"
                     >
                       Place Order
