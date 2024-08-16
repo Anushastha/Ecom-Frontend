@@ -27,9 +27,9 @@ const LandingPage = () => {
             return shuffledArray;
           };
 
-          // Shuffle the products and take the first 4
+          // Shuffle the products and take the first 3
           const shuffledProducts = shuffleArray(allProducts);
-          setProducts(shuffledProducts.slice(0, 4));
+          setProducts(shuffledProducts.slice(0, 3));
         } else {
           console.error("Failed to fetch products");
         }
@@ -50,7 +50,7 @@ const LandingPage = () => {
             Discover luxurious skincare and beauty essentials designed just for
             you.
           </p>
-          <Link to="/shop" className="btn btn-pink font-primary">
+          <Link to="/user/dashboard" className="btn btn-pink font-primary">
             Shop Now
           </Link>
         </div>
@@ -129,7 +129,9 @@ const LandingPage = () => {
       {/* Testimonials Section */}
       <section className="testimonials py-16">
         <div className="container mx-auto text-center">
-          <h2 className="section-title">What Our Customers Say</h2>
+          <h2 className="section-title tw-text-white">
+            What Our Customers Say
+          </h2>
           <div className="testimonial-carousel flex overflow-x-auto space-x-6 pb-10">
             <div className="testimonial-card bg-white p-8 rounded-lg flex-shrink-0 w-80">
               <p className="testimonial-text mb-4 font-secondary text-gray-700">

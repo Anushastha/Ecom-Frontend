@@ -26,10 +26,12 @@ const OrdersPage = ({ userId }) => {
   }, [userId]);
 
   const calculateTotalCost = (items) => {
-    return items.reduce(
-      (total, item) => total + item.productId.productPrice * item.quantity,
-      0
-    );
+    return items.reduce((total, item) => {
+      if (item.productId) {
+        return total + item.productId.productPrice * item.quantity;
+      }
+      return total; // If productId is null, skip adding to total
+    }, 0);
   };
 
   return (
@@ -90,41 +92,61 @@ const OrdersPage = ({ userId }) => {
                             </td>
                           )}
                           <td>
-                            <div
-                              style={{
-                                width: "100px",
-                                height: "80px",
-                                backgroundImage: `url(${item.productId?.productImageUrl})`,
-                                backgroundSize: "cover",
-                                backgroundPosition: "center",
-                                borderRadius: "4px",
-                                border: "1px solid #dee2e6",
-                                boxShadow: "0 2px 4px rgba(0,0,0,0.1)",
-                              }}
-                              title={item.productId?.productName}
-                            ></div>
+                            {item.productId ? (
+                              <div
+                                style={{
+                                  width: "100px",
+                                  height: "80px",
+                                  backgroundImage: `url(${item.productId?.productImageUrl})`,
+                                  backgroundSize: "cover",
+                                  backgroundPosition: "center",
+                                  borderRadius: "4px",
+                                  border: "1px solid #dee2e6",
+                                  boxShadow: "0 2px 4px rgba(0,0,0,0.1)",
+                                }}
+                                title={item.productId?.productName}
+                              ></div>
+                            ) : (
+                              <div
+                                style={{
+                                  width: "100px",
+                                  height: "80px",
+                                  backgroundColor: "#e0e0e0",
+                                }}
+                              >
+                                Product Image Not Available
+                              </div>
+                            )}
                           </td>
                           <td>
-                            <div>
-                              <strong>Product Name:</strong>{" "}
-                              {item?.productId?.productName}
-                              <br />
-                              <strong>Description:</strong>{" "}
-                              {item?.productId?.productDescription}
-                            </div>
+                            {item.productId ? (
+                              <div>
+                                <strong>Product Name:</strong>{" "}
+                                {item?.productId?.productName}
+                                <br />
+                                <strong>Description:</strong>{" "}
+                                {item?.productId?.productDescription}
+                              </div>
+                            ) : (
+                              <div>
+                                <strong>Product Unavailable</strong>
+                              </div>
+                            )}
                           </td>
                           <td style={{ textAlign: "center" }}>
                             {item.quantity}
                           </td>
-                          <td
-                            rowSpan={order.items.length}
-                            style={{
-                              textAlign: "center",
-                              verticalAlign: "middle",
-                            }}
-                          >
-                            {index === 0 && `Rs.${totalCost}`}
-                          </td>
+                          {index === 0 && (
+                            <td
+                              rowSpan={order.items.length}
+                              style={{
+                                textAlign: "center",
+                                verticalAlign: "middle",
+                              }}
+                            >
+                              {`Rs.${totalCost}`}
+                            </td>
+                          )}
                           {index === 0 && (
                             <td
                               rowSpan={order.items.length}

@@ -12,6 +12,7 @@ import 'react-toastify/dist/ReactToastify.css';
 import Landing from './pages/Landing';
 import NavBar from './components/NavBar';
 import LoginRegister from './pages/LoginRegister';
+import useSessionCheck from './hooks/useSessionCheck';
 
 import "./styles/index.css";
 import Footer from './components/Footer';
@@ -70,6 +71,8 @@ function Layout() {
         !location.pathname.startsWith('/resetPassword') &&
         !location.pathname.startsWith('/changeExpiredPassword');
 
+    // useSessionCheck();
+
     return (
         <>
             {showNavBar && <NavBar />}
@@ -103,7 +106,7 @@ function App() {
                     <Route path="user/changePassword" element={<PrivateRoute><ChangePassword /> </PrivateRoute>} />
                     <Route path="user/editProfile/:id" element={<PrivateRoute><EditProfile /> </PrivateRoute>} />
                     <Route path="user/userProfile" element={<PrivateRoute><UserProfile /> </PrivateRoute>} />
-                    
+
 
                     {/* Admin routes */}
                     <Route path="admin/dashboard" element={<PrivateRoute isAdmin={true}><AdminDashboard /></PrivateRoute>} />
@@ -111,12 +114,8 @@ function App() {
                     <Route path="admin/products/editProduct/:id" element={<PrivateRoute isAdmin={true}><AdminEditProduct /></PrivateRoute>} />
                     <Route path="admin/category" element={<PrivateRoute isAdmin={true}><AdminCategory /></PrivateRoute>} />
                     <Route path="admin/category/products/:id" element={<PrivateRoute isAdmin={true}><AdminCategoryProduct /></PrivateRoute>} />
-                   
 
-                  
-                    
-                   
-                     {/* <Route element={<UserRoutes />}>
+                    {/* <Route element={<UserRoutes />}>
                         <Route path="user/wishlist" element={<Wishlist />} />
                         <Route path="user/orders" element={<OrdersPage />} />
                         <Route path="user/cart" element={<Cart />} />
@@ -125,7 +124,7 @@ function App() {
                         <Route path="user/userProfile" element={<UserProfile />} />
                     </Route> */}
 
-                      {/* <Route element={<AdminRoutes />}>
+                    {/* <Route element={<AdminRoutes />}>
                         <Route path="admin/dashboard" element={<AdminDashboard />} />
                         <Route path="admin/products" element={<AdminProducts />} />
                         <Route path="admin/products/editProduct/:id" element={<AdminEditProduct />} />
