@@ -3,7 +3,7 @@ import { useLocation, useNavigate } from "react-router-dom";
 import { toast } from "react-toastify";
 import { updatePasswordApi } from "../apis/Apis";
 import { FaEye, FaEyeSlash } from "react-icons/fa";
-import "../styles/passStrength.css"; // Ensure this file contains your CSS styles
+import "../styles/passStrength.css";
 
 const evaluatePasswordStrength = (password) => {
   const lengthCriteria = password.length >= 8 && password.length <= 12;

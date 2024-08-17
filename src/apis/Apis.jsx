@@ -15,7 +15,6 @@ const Api = axios.create({
 //   },
 // };
 
-
 // Request interceptor to add the token to every request
 Api.interceptors.request.use(
   (config) => {
@@ -35,11 +34,13 @@ export const loginApi = (data) => Api.post("/api/user/login", data);
 export const registerApi = (data) => Api.post("/api/user/create", data);
 export const sendEmailApi = (data) =>
   Api.post("/api/user/reset_password", data);
-export const verifyCodeApi = (data) =>
-  Api.post("/api/user/reset_code", data);
+export const verifyCodeApi = (data) => Api.post("/api/user/reset_code", data);
 export const updatePasswordApi = (data) =>
   Api.post("/api/user/update_password", data);
-export const expiredPasswordChangeApi = (data) => Api.post("/api/user/expired_password_change", data);
+export const expiredPasswordChangeApi = (data) =>
+  Api.post("/api/user/expired_password_change", data);
+export const verifyEmailCodeApi = (data) =>
+  Api.post("/api/user/email_code", data);
 
 export const changePassword = async (data, token) => {
   try {
@@ -99,8 +100,7 @@ export const searchCategoriesApi = (query) =>
 //Cart APIs
 export const createCartApi = (data) => Api.post("/api/cart/create_cart", data);
 export const getCartApi = (id) => Api.get(`/api/cart/get_cart/${id}`);
-export const deleteCartApi = (id) =>
-  Api.delete(`/api/cart/remove_cart/${id}`);
+export const deleteCartApi = (id) => Api.delete(`/api/cart/remove_cart/${id}`);
 export const updateCartItemQuantityApi = (itemId, data) =>
   Api.put(`/api/cart/update_cart/${itemId}`, data);
 export const clearCartApi = (data) => Api.post("/api/cart/clear", data);
@@ -112,3 +112,6 @@ export const updateOrderStatusApi = (orderId, status) =>
   Api.put(`/api/orders/update_order/${orderId}/status`, { status });
 export const getOrdersByUserIdApi = (userId) =>
   Api.get(`/api/orders/getOrdersByUser/${userId}`);
+
+//Logs APIs
+export const getLogsApi = () => Api.get("/api/logs");

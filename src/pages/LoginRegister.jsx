@@ -154,7 +154,7 @@ function LoginRegister() {
       .then((res) => {
         if (res.data.success) {
           toast.success(res.data.message);
-          navigate("/auth?mode=login");
+          navigate("/verifyEmail", { state: { User_email: email } });
         } else {
           toast.error(res.data.message);
         }

@@ -25,8 +25,8 @@ const OrdersPage = () => {
           setError("Failed to fetch orders");
         }
       } catch (err) {
-        console.error("Error fetching orders:", err);
-        setError("Error fetching orders");
+        // console.error("Error fetching orders:", err);
+        // setError("Error fetching orders");
       } finally {
         setLoading(false);
       }

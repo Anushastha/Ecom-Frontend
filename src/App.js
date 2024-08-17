@@ -32,6 +32,7 @@ import ChangePassword from './pages/user/ChangePassword';
 import EditProfile from './pages/user/EditProfile';
 import UserProfile from './pages/user/UserProfile';
 import ExpiredPassChange from './pages/user/ExpiredPassChange';
+import VerifyEmail from './pages/user/VerifyEmail';
 
 const PrivateRoute = ({ children, isAdmin }) => {
     const token = localStorage.getItem('token');
@@ -91,6 +92,7 @@ function App() {
                     <Route path='/resetCode' element={<ForgotPasswordCode />} />
                     <Route path='/resetPassword' element={<ResetPassword />} />
                     <Route path='/changeExpiredPassword' element={<ExpiredPassChange />} />
+                    <Route path="/verifyEmail" element={<VerifyEmail />} />
 
                     {/* User public routes */}
                     <Route path="user/dashboard" element={<UserDashboard />} />
@@ -109,7 +111,7 @@ function App() {
                     <Route path="admin/products/editProduct/:id" element={<PrivateRoute isAdmin={true}><AdminEditProduct /></PrivateRoute>} />
                     <Route path="admin/category" element={<PrivateRoute isAdmin={true}><AdminCategory /></PrivateRoute>} />
                     <Route path="admin/category/products/:id" element={<PrivateRoute isAdmin={true}><AdminCategoryProduct /></PrivateRoute>} />
-
+                    
                     {/* <Route element={<UserRoutes />}>
                         <Route path="user/wishlist" element={<Wishlist />} />
                         <Route path="user/orders" element={<OrdersPage />} />
