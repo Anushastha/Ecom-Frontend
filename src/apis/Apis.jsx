@@ -114,4 +114,4 @@ export const getOrdersByUserIdApi = (userId) =>
   Api.get(`/api/orders/getOrdersByUser/${userId}`);
 
 //Logs APIs
-export const getLogsApi = () => Api.get("/api/logs");
+export const getLogsApi = () => Api.get("/api/logs/logs");
