@@ -29,7 +29,7 @@ const AdminDashboard = () => {
     >
       <div className="d-flex justify-content-between mb-4 align-items-center">
         <p className="font-primary font-bold" style={{ fontSize: "30px" }}>
-          User Action Logs
+          User Activity Logs
         </p>
       </div>
 
@@ -49,9 +49,7 @@ const AdminDashboard = () => {
                 logs.map((log) => (
                   <tr key={log._id}>
                     <td>{new Date(log.timestamp).toLocaleString()}</td>
-                    <td>
-                      {log.userId.fullName} ({log.userId.email})
-                    </td>
+                    <td>{log.userId.fullName}</td>
                     <td>{log.action}</td>
                     <td>{log.details}</td>
                   </tr>
